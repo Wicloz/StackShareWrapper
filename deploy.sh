@@ -3,7 +3,7 @@ php artisan down --retry=2
 git pull -r
 
 composer install
-npm install
+yarn install
 
 ./production.sh
 

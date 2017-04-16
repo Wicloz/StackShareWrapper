@@ -1,5 +1,5 @@
 #!/bin/bash
 composer create-project
-npm install
+yarn install
 
 ./production.sh
