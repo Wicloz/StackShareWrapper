@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { mix } = require('laravel-mix');
 
 /*
@@ -26,5 +27,5 @@ if (mix.config.inProduction) {
 }
 
 else {
-  mix.sourceMaps().browserSync('sharestack.app');
+  mix.sourceMaps().browserSync(process.env.APP_URL);
 }
