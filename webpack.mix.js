@@ -11,5 +11,20 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.js('resources/assets/js/app.js', 'public/js').extract([
+     'vue',
+     'jquery',
+     'axios',
+     'lodash',
+     'bootstrap-sass',
+   ])
+   .sass('resources/assets/sass/app.scss', 'public/css')
+   .sass('resources/assets/sass/bootstrap.scss', 'public/css');
+
+if (mix.config.inProduction) {
+  mix.version().disableNotifications();
+}
+
+else {
+  mix.sourceMaps().browserSync('sharestack.app');
+}
