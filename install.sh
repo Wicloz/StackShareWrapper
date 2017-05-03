@@ -1,4 +1,5 @@
 #!/bin/bash
+
 composer create-project
 yarn install
 
