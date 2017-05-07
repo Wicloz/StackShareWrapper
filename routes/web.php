@@ -11,10 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
 Route::get('/dashboard', 'UserController@dashboard');
+
+Route::get('/{path?}', 'BrowseController@request')->where('path', '(.*)');
