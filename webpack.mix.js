@@ -20,7 +20,9 @@ mix.js('resources/assets/js/app.js', 'public/js').extract([
      'bootstrap-sass',
    ])
    .sass('resources/assets/sass/app.scss', 'public/css')
-   .sass('resources/assets/sass/bootstrap.scss', 'public/css');
+   .sass('resources/assets/sass/bootstrap.scss', 'public/css')
+   .copyDirectory('resources/assets/files/js', 'public/js')
+   .copyDirectory('resources/assets/files/css', 'public/css');
 
 if (mix.config.inProduction) {
   mix.version().disableNotifications();
