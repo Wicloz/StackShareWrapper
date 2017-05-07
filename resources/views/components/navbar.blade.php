@@ -48,3 +48,4 @@
         </div>
     </div>
 </nav>
+<div class="navbar"></div>

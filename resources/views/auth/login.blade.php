@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Login')
 
 @section('content-center')
     <div class="panel panel-default">

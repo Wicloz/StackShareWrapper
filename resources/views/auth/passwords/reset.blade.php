@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Reset Password')
 
 @section('content-center')
     <div class="panel panel-default">

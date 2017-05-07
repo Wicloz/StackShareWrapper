@@ -66,7 +66,6 @@
     <div id="app">
         <!-- Navigation Bar -->
         @include('components.navbar')
-        <div class="navbar"></div>
 
         <!-- Main Content -->
         @yield('content-top')
