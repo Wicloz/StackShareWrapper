@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Information -->
-    <title>@yield('title', 'DEFINE')</title>
+    <title>{{ config('app.name') }} - @yield('title', 'DEFINE')</title>
     <meta name="description" content="">
     <meta name="author" content="Wilco de Boer | Wicloz">
 

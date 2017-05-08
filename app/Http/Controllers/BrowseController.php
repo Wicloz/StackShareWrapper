@@ -13,6 +13,11 @@ class BrowseController extends Controller
      */
     public function request($path = '')
     {
+        if ($path === '/') {
+            $path = '';
+        }
+        $path = '/' . $path;
+
         if (true) {
             return $this->folder($path);
         } else {
@@ -28,7 +33,7 @@ class BrowseController extends Controller
     public function folder($path)
     {
         return view('folder', [
-            'path' => '/' . $path,
+            'path' => $path,
             'pathObjects' => $this->pathToObjects($path),
         ]);
     }
@@ -41,7 +46,7 @@ class BrowseController extends Controller
     public function file($path)
     {
         return view('file', [
-            'path' => '/' . $path,
+            'path' => $path,
             'pathObjects' => $this->pathToObjects($path),
         ]);
     }
@@ -52,7 +57,11 @@ class BrowseController extends Controller
      * @return array
      */
     private function pathToObjects($path) {
-        if (empty($path) || $path === '/') {
+        if (str_starts_with($path, '/')) {
+            $path = substr($path, 1);
+        }
+
+        if (empty($path)) {
             return [];
         }
 
