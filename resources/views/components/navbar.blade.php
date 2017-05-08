@@ -17,7 +17,16 @@
 
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
-                &nbsp;
+                @if (!empty($pathObjects))
+                    @foreach ($pathObjects as $pathObject)
+                        <li>
+                            <a href="{{ url($pathObject->pathTo) }}">
+                                <span>><span>
+                                {{ $pathObject->name }}
+                            </a>
+                        </li>
+                    @endforeach
+                @endif
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -28,11 +37,14 @@
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ Auth::user()->name }} <span class="caret"></span>
+                            {{ Auth::user()->email }} <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
                             <li>
+                                <a href="{{ route('dashboard') }}">
+                                    Dashboard
+                                </a>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     Logout
                                 </a>

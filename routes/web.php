@@ -13,6 +13,6 @@
 
 Auth::routes();
 
-Route::get('/dashboard', 'UserController@dashboard');
+Route::get('/dashboard', 'UserController@dashboard')->name('dashboard');
 
 Route::get('/{path?}', 'BrowseController@request')->where('path', '(.*)');

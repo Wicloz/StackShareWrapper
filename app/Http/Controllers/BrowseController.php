@@ -28,7 +28,8 @@ class BrowseController extends Controller
     public function folder($path)
     {
         return view('folder', [
-            'path' => $path,
+            'path' => '/' . $path,
+            'pathObjects' => $this->pathToObjects($path),
         ]);
     }
 
@@ -40,7 +41,34 @@ class BrowseController extends Controller
     public function file($path)
     {
         return view('file', [
-            'path' => $path,
+            'path' => '/' . $path,
+            'pathObjects' => $this->pathToObjects($path),
         ]);
+    }
+
+    /**
+     * Turn a path string into an array of more informative objects.
+     *
+     * @return array
+     */
+    private function pathToObjects($path) {
+        if (empty($path) || $path === '/') {
+            return [];
+        }
+
+        else {
+            $objects = [];
+
+            foreach (explode('/', $path) as $part) {
+               $newObject = new \stdClass();
+
+               $newObject->name = $part;
+               $newObject->pathTo = (count($objects) > 0 ? $objects[count($objects) - 1]->pathTo : '') . '/' . $part;
+
+               $objects[] = $newObject;
+            }
+
+            return $objects;
+        }
     }
 }
