@@ -17,16 +17,7 @@
 
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
-                @if (!empty($pathObjects))
-                    @foreach ($pathObjects as $pathObject)
-                        <li>
-                            <a href="{{ url($pathObject->pathTo) }}">
-                                <span>><span>
-                                {{ $pathObject->name }}
-                            </a>
-                        </li>
-                    @endforeach
-                @endif
+                &nbsp
             </ul>
 
             <!-- Right Side Of Navbar -->

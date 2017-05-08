@@ -20,4 +20,26 @@ class StackFile extends Model
     {
         return $this->belongsTo('App\StackFolder');
     }
+
+    /**
+     * Returns the full path to this file.
+     *
+     * @return string
+     */
+    public function getPathAttribute()
+    {
+        $current = $this;
+        $path = '';
+
+        while ($current->name !== null) {
+            $path = '/' . $current->name . $path;
+            $current = $current->parent;
+        }
+
+        if ($path === '') {
+            $path = '/';
+        }
+
+        return $path;
+    }
 }

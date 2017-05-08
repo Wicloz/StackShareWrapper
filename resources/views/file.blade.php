@@ -1,2 +1,2 @@
 @extends('layouts.app')
-@section('title', $path)
+@section('title', $file->path)

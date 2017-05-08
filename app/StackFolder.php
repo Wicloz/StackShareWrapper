@@ -36,4 +36,26 @@ class StackFolder extends Model
     {
         return $this->hasMany('App\StackFile', 'parent_id');
     }
+
+    /**
+     * Returns the full path to this folder.
+     *
+     * @return string
+     */
+    public function getPathAttribute()
+    {
+        $current = $this;
+        $path = '';
+
+        while ($current->name !== null) {
+            $path = '/' . $current->name . $path;
+            $current = $current->parent;
+        }
+
+        if ($path === '') {
+            $path = '/';
+        }
+
+        return $path;
+    }
 }

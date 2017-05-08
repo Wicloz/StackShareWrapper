@@ -20,6 +20,7 @@ class CreateStackFoldersTable extends Migration
             $table->timestamps();
 
             $table->foreign('parent_id')->references('id')->on('stack_folders')->onDelete('cascade');
+            $table->unique(['name', 'parent_id']);
         });
     }
 
