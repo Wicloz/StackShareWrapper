@@ -4,3 +4,10 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+// Bootstrap fixes and additions
+@-moz-document url-prefix() {
+  fieldset {
+    display: table-cell;
+  }
+}
