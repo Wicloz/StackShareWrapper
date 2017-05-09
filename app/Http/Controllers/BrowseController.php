@@ -52,6 +52,8 @@ class BrowseController extends Controller
      */
     public function folder(StackFolder $folder)
     {
+        $folder->refresh();
+
         return view('folder', [
             'folder' => $folder,
         ]);

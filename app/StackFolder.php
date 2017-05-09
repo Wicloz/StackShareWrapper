@@ -58,4 +58,35 @@ class StackFolder extends Model
 
         return $path;
     }
+
+    /**
+     * Refresh all the data for this folder from stack.
+     */
+    public function refresh()
+    {
+        $json = \App\Stack\Downloader::downloadList($this->path);
+
+        $this->subFolders()->delete();
+        $this->subFiles()->delete();
+
+        foreach ($json->nodes as $node) {
+            $name = str_replace_first($this->path, '', $node->path);
+            if (str_starts_with($name, '/')) {
+                $name = str_replace_first('/', '', $name);
+            }
+
+            if ($node->mimetype === 'httpd/unix-directory') {
+                $this->subFolders()->create([
+                    'name' => $name,
+                ]);
+            }
+
+            else {
+                $this->subFiles()->create([
+                    'name' => $name,
+                    'mimetype' => $node->mimetype,
+                ]);
+            }
+        }
+    }
 }
