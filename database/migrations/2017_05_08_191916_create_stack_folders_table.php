@@ -16,7 +16,6 @@ class CreateStackFoldersTable extends Migration
         Schema::create('stack_folders', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('name', 2048)->nullable();
             $table->string('path', 4096)->unique();
             $table->string('path_slug', 4096)->unique();
             $table->string('path_hash')->unique();
@@ -25,7 +24,6 @@ class CreateStackFoldersTable extends Migration
             $table->timestamps();
 
             $table->foreign('parent_id')->references('id')->on('stack_folders')->onDelete('cascade');
-            $table->unique(['name', 'parent_id']);
         });
     }
 

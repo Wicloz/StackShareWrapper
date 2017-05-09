@@ -13,8 +13,7 @@ class RootSeeder extends Seeder
     public function run()
     {
         StackFolder::firstOrCreate([
-            'name' => null,
-            'path' => '',
+            'path' => '/',
             'parent_id' => null,
         ]);
     }
