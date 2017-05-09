@@ -15,9 +15,15 @@ class CreateStackFilesTable extends Migration
     {
         Schema::create('stack_files', function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('name', 2048);
-            $table->integer('parent_id')->unsinged();
+            $table->string('path', 4096)->unique();
+            $table->string('path_slug', 4096)->unique();
+            $table->string('path_hash')->unique();
+
             $table->string('mimetype');
+
+            $table->integer('parent_id')->unsinged();
             $table->timestamps();
 
             $table->foreign('parent_id')->references('id')->on('stack_folders')->onDelete('cascade');

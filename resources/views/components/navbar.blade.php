@@ -17,7 +17,16 @@
 
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
-                &nbsp
+                @if (isset($item))
+                    @foreach ($item->breadcrumbs as $name => $url)
+                        <li>
+                            <a href="{{ url($url) }}">
+                                <span>></span>
+                                {{ $name }}
+                            </a>
+                        </li>
+                    @endforeach
+                @endif
             </ul>
 
             <!-- Right Side Of Navbar -->

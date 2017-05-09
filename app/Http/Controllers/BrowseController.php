@@ -16,32 +16,41 @@ class BrowseController extends Controller
      */
     public function request($path = '')
     {
-        // Explode the path properly
-        if ($path === '/' || $path === '') {
-            $path = [];
-        } else {
-            $path = explode('/', $path);
-        }
+        $path = '/' . $path;
 
-        // Grab the root folder (or fail)
-        $folder = StackFolder::whereNull('name')->whereNull('parent_id')->firstOrFail();
-
-        foreach ($path as $index => $pathBit) {
-            if ($index === count($path) - 1) {
-                // At the last bit, try to find a file
-                $file = $folder->subFiles()->where('name', $pathBit)->first();
-            }
-            if (!isset($file)) {
-                // If no file was found, grab the sub folder (or fail)
-                $folder = $folder->subFolders()->where('name', $pathBit)->firstOrFail();
-            }
-        }
-
+        // Try to grab as file
+        $file = StackFile::where('path_slug', $path)->first();
         if (isset($file)) {
             return $this->file($file);
-        } else {
+        }
+
+        // Try to grab as folder
+        else {
+            $folder = StackFolder::where('path_slug', $path)->firstOrFail();
             return $this->folder($folder);
         }
+    }
+
+    /**
+     * Show the requested folder for a hash.
+     *
+     * @param string $hash
+     * @return \Illuminate\Http\Response
+     */
+    public function folderHash($hash)
+    {
+        return $this->folder(StackFolder::where('path_hash', $hash)->firstOrFail());
+    }
+
+    /**
+     * Show the requested file for a hash.
+     *
+     * @param string $hash
+     * @return \Illuminate\Http\Response
+     */
+    public function fileHash($hash)
+    {
+        return $this->file(StackFile::where('path_hash', $hash)->firstOrFail());
     }
 
     /**
@@ -55,7 +64,7 @@ class BrowseController extends Controller
         $folder->refresh();
 
         return view('folder', [
-            'folder' => $folder,
+            'item' => $folder,
         ]);
     }
 
@@ -68,7 +77,7 @@ class BrowseController extends Controller
     public function file(StackFile $file)
     {
         return view('file', [
-            'file' => $file,
+            'item' => $file,
         ]);
     }
 }

@@ -15,6 +15,6 @@ Auth::routes();
 
 Route::get('/dashboard', 'UserController@dashboard')->name('dashboard');
 
-Route::get('/folder/{folder}', 'BrowseController@folder');
-Route::get('/file/{file}', 'BrowseController@file');
+Route::get('/folder/{hash}', 'BrowseController@folderHash');
+Route::get('/file/{hash}', 'BrowseController@fileHash');
 Route::get('/{path?}', 'BrowseController@request')->where('path', '(.*)');

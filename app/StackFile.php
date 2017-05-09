@@ -11,7 +11,7 @@ class StackFile extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'parent', 'mimetype'];
+    protected $fillable = ['name', 'path', 'parent', 'mimetype'];
 
     /**
      * Get the parent folder for this file.
@@ -22,24 +22,60 @@ class StackFile extends Model
     }
 
     /**
-     * Returns the full path to this file.
-     *
-     * @return string
+     * @return mixed|string
      */
-    public function getPathAttribute()
-    {
-        $current = $this;
-        $path = '';
+    public function getPathDisplayAttribute() {
+        return empty($this->path) ? '/' : $this->path;
+    }
 
-        while ($current->name !== null) {
-            $path = '/' . $current->name . $path;
-            $current = $current->parent;
+    /**
+     * @return array
+     */
+    public function getBreadcrumbsAttribute() {
+        $breadcrumbs = [];
+
+        if (!empty($this->path)) {
+            $names = array_slice(explode('/', $this->path), 1);
+            $slugs = array_slice(explode('/', $this->path_slug), 1);
+
+            foreach ($names as $index => $name) {
+                $breadcrumbs[$name] = ($index > 0 ? $breadcrumbs[$names[$index - 1]] : '') . '/' . $slugs[$index];
+            }
         }
 
-        if ($path === '') {
-            $path = '/';
+        return $breadcrumbs;
+    }
+
+    /**
+     * @param $value
+     * @throws \Exception
+     */
+    public function setNameAttribute($value) {
+        if (empty($this->attributes['name'])) {
+            $this->attributes['name'] = $value;
         }
 
-        return $path;
+        else {
+            throw new \Exception('Value can only be assigned once.');
+        }
+    }
+
+    /**
+     * @param $value
+     * @throws \Exception
+     */
+    public function setPathAttribute($value) {
+        if (empty($this->attributes['path'])) {
+            $this->attributes['path'] = $value;
+            $this->attributes['path_hash'] = hashify($this->path_display);
+
+            $this->attributes['path_slug'] = implode('/', collect(explode('/', $this->path_display))->map(function ($item, $key) {
+                return slugify($item);
+            })->all());
+        }
+
+        else {
+            throw new \Exception('Value can only be assigned once.');
+        }
     }
 }

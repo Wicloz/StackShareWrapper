@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Stack\Downloader;
 
 class StackFolder extends Model
 {
@@ -11,7 +12,7 @@ class StackFolder extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'parent'];
+    protected $fillable = ['name', 'path', 'parent'];
 
     /**
      * Get the parent folder for this folder.
@@ -38,25 +39,61 @@ class StackFolder extends Model
     }
 
     /**
-     * Returns the full path to this folder.
-     *
-     * @return string
+     * @return mixed|string
      */
-    public function getPathAttribute()
-    {
-        $current = $this;
-        $path = '';
+    public function getPathDisplayAttribute() {
+        return empty($this->path) ? '/' : $this->path;
+    }
 
-        while ($current->name !== null) {
-            $path = '/' . $current->name . $path;
-            $current = $current->parent;
+    /**
+     * @return array
+     */
+    public function getBreadcrumbsAttribute() {
+        $breadcrumbs = [];
+
+        if (!empty($this->path)) {
+            $names = array_slice(explode('/', $this->path), 1);
+            $slugs = array_slice(explode('/', $this->path_slug), 1);
+
+            foreach ($names as $index => $name) {
+                $breadcrumbs[$name] = ($index > 0 ? $breadcrumbs[$names[$index - 1]] : '') . '/' . $slugs[$index];
+            }
         }
 
-        if ($path === '') {
-            $path = '/';
+        return $breadcrumbs;
+    }
+
+    /**
+     * @param $value
+     * @throws \Exception
+     */
+    public function setNameAttribute($value) {
+        if (empty($this->attributes['name'])) {
+            $this->attributes['name'] = $value;
         }
 
-        return $path;
+        else {
+            throw new \Exception('Value can only be assigned once.');
+        }
+    }
+
+    /**
+     * @param $value
+     * @throws \Exception
+     */
+    public function setPathAttribute($value) {
+        if (empty($this->attributes['path'])) {
+            $this->attributes['path'] = $value;
+            $this->attributes['path_hash'] = hashify($this->path_display);
+
+            $this->attributes['path_slug'] = implode('/', collect(explode('/', $this->path_display))->map(function ($item, $key) {
+                return slugify($item);
+            })->all());
+        }
+
+        else {
+            throw new \Exception('Value can only be assigned once.');
+        }
     }
 
     /**
@@ -64,29 +101,35 @@ class StackFolder extends Model
      */
     public function refresh()
     {
-        $json = \App\Stack\Downloader::downloadList($this->path);
-
-        $this->subFolders()->delete();
-        $this->subFiles()->delete();
+        $json = Downloader::downloadList($this->path);
+        $remoteNames = collect([]);
 
         foreach ($json->nodes as $node) {
-            $name = str_replace_first($this->path, '', $node->path);
+            $name = str_replace_first($this->path_display, '', $node->path);
             if (str_starts_with($name, '/')) {
                 $name = str_replace_first('/', '', $name);
             }
+            $remoteNames[] = $name;
 
             if ($node->mimetype === 'httpd/unix-directory') {
-                $this->subFolders()->create([
+                $this->subFolders()->updateOrCreate([
                     'name' => $name,
+                    'path' => $this->path . '/' . $name,
+                ],[
                 ]);
             }
 
             else {
-                $this->subFiles()->create([
+                $this->subFiles()->updateOrCreate([
                     'name' => $name,
+                    'path' => $this->path . '/' . $name,
+                ],[
                     'mimetype' => $node->mimetype,
                 ]);
             }
         }
+
+        StackFolder::whereIn('name',  $this->subFolders()->pluck('name')->diff($remoteNames))->delete();
+        StackFile::whereIn('name',  $this->subFiles()->pluck('name')->diff($remoteNames))->delete();
     }
 }

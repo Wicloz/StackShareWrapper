@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $folder->path)
+@section('title', $item->path_display)
 
 @section('content-center')
     <div class="table-responsive">
@@ -13,20 +13,20 @@
             </thead>
 
             <tbody>
-                @foreach ($folder->subFolders as $subFolder)
+                @foreach ($item->subFolders as $subFolder)
                     <tr>
                         <td></td>
                         <td>
-                            <a href="{{ url($subFolder->path) }}">{{ $subFolder->name }}</a>
+                            <a href="{{ url($subFolder->path_slug) }}">{{ $subFolder->name }}</a>
                         </td>
                     </tr>
                 @endforeach
 
-                @foreach ($folder->subFiles as $subFile)
+                @foreach ($item->subFiles as $subFile)
                     <tr>
                         <td></td>
                         <td>
-                            <a href="{{ url($subFile->path) }}">{{ $subFile->name }}</a>
+                            <a href="{{ url($subFile->path_slug) }}">{{ $subFile->name }}</a>
                         </td>
                     </tr>
                 @endforeach
