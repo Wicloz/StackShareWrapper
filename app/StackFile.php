@@ -20,26 +20,14 @@ class StackFile extends StackItem
     }
 
     /**
- * @return bool
- */
-    public function getCanPreviewAttribute()
-    {
-        return $this->mime_min === 'image' || $this->mime_min === 'video' || $this->mime_min === 'audio';
-    }
-
-    /**
-     * @return bool
-     */
-    public function getCanThumbnailAttribute()
-    {
-        return $this->mime_min === 'image';
-    }
-
-    /**
      * @return string
      */
-    public function getMimeMinAttribute()
+    public function getTypeAttribute()
     {
+        if ($this->mimetype === 'application/octet-stream') {
+            return 'video';
+        }
+
         return explode('/', $this->mimetype)[0];
     }
 
@@ -48,10 +36,16 @@ class StackFile extends StackItem
      */
     public function getPreviewThumbAttribute()
     {
-        $baseurl = config('stack.baseurl');
-        $shareid = config('stack.shareid');
+        switch ($this->type) {
+            case 'image':
+                $baseurl = config('stack.baseurl');
+                $shareid = config('stack.shareid');
+                return $baseurl . '/public-share/' . $shareid . '/preview?path=' . $this->path . '&mode=thumbnail';
 
-        return $baseurl . '/public-share/' . $shareid . '/preview?path=' . $this->path . '&mode=thumbnail';
+            default:
+                return '';
+        }
+
     }
 
     /**

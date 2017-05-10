@@ -38,6 +38,14 @@ class StackFolder extends StackItem
     }
 
     /**
+     * @return string
+     */
+    public function getPreviewThumbAttribute()
+    {
+        return '';
+    }
+
+    /**
      * Refresh all the data for this folder from stack.
      */
     public function refresh()

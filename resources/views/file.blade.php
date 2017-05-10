@@ -2,11 +2,14 @@
 @section('title', $item->path)
 
 @section('content-center')
-    @if ($item->mime_min === 'image')
-        <img src="{{ $item->preview_full }}" alt="{{ $item->name }}">
-    @elseif ($item->mime_min === 'video')
-        <video src="{{ $item->preview_full }}" autoplay>
-    @elseif ($item->mime_min === 'audio')
-        <audio src="{{ $item->preview_full }}" controls autoplay>
+    @if ($item->type === 'image')
+        <img class="preview-image" src="{{ $item->preview_full }}" alt="{{ $item->name }}">
+
+    @elseif ($item->type === 'video')
+        <video class="preview-video" src="{{ $item->preview_full }}" controls autoplay>
+
+    @elseif ($item->type === 'audio')
+        <audio class="preview-audio" src="{{ $item->preview_full }}" controls autoplay>
+
     @endif
 @endsection
