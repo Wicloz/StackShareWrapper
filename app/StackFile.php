@@ -42,6 +42,12 @@ class StackFile extends StackItem
                 $shareid = config('stack.shareid');
                 return $baseurl . '/public-share/' . $shareid . '/preview?path=' . $this->path . '&mode=thumbnail';
 
+            case 'video':
+                return url('/media/thumbnails/video.svg');
+
+            case 'audio':
+                return url('/media/thumbnails/audio.svg');
+
             default:
                 return '';
         }

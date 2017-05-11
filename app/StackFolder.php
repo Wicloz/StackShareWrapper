@@ -42,7 +42,7 @@ class StackFolder extends StackItem
      */
     public function getPreviewThumbAttribute()
     {
-        return '';
+        return url('/media/thumbnails/folder.svg');
     }
 
     /**

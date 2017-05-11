@@ -10,6 +10,7 @@ npm-debug.log
 /public/fonts
 /public/css
 /public/js
+/public/media
 /public/mix-manifest.json
 
 /storage/*.key
