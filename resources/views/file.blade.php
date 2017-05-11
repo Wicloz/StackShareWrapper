@@ -11,5 +11,11 @@
     @elseif ($item->type === 'audio')
         <audio class="preview-audio" src="{{ $item->preview_full }}" controls autoplay>
 
+    @elseif ($item->type === 'text')
+        <pre class="preview-file">{{ \App\Stack\Downloader::downloadPage($item->preview_full) }}</pre>
+
+    @else
+        <p>No Preview Available</p>
+
     @endif
 @endsection

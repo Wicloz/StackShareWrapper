@@ -25,7 +25,7 @@ class StackFile extends StackItem
     public function getTypeAttribute()
     {
         if ($this->mimetype === 'application/octet-stream') {
-            return 'video';
+            return '';
         }
 
         return explode('/', $this->mimetype)[0];
@@ -48,8 +48,11 @@ class StackFile extends StackItem
             case 'audio':
                 return url('/media/thumbnails/audio.svg');
 
+            case 'text':
+                return url('/media/thumbnails/text.svg');
+
             default:
-                return '';
+                return url('/media/thumbnails/file.svg');
         }
 
     }
