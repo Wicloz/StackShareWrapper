@@ -50,12 +50,16 @@ class StackFile extends StackItem
     /**
      * @return string
      */
+    public function getMimetypeAttribute()
+    {
+        return filenameToMimeType($this->name);
+    }
+
+    /**
+     * @return string
+     */
     public function getTypeAttribute()
     {
-        if ($this->mimetype === 'application/octet-stream') {
-            return '';
-        }
-
         return explode('/', $this->mimetype)[0];
     }
 
@@ -71,7 +75,12 @@ class StackFile extends StackItem
                 return "{$baseurl}/public-share/{$shareid}/preview?path={$this->path}&mode=thumbnail";
 
             default:
-                return url("/media/thumbnails/{$this->type}.svg");
+                if (file_exists(public_path("/media/thumbnails/{$this->type}.svg"))) {
+                    return url("/media/thumbnails/{$this->type}.svg");
+                } else {
+                    return url("/media/thumbnails/file.svg");
+                }
+
         }
 
     }

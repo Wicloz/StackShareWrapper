@@ -1,5 +1,7 @@
 <?php
 
+use Pekkis\MimeTypes\MimeTypes;
+
 /**
  * @param $string
  * @return string
@@ -25,4 +27,21 @@ function slugify($string) {
  */
 function hashify($string) {
     return hash('crc32b', $string);
+}
+
+/**
+ * @param $filename
+ * @return null|string
+ */
+function filenameToMimeType($filename) {
+    $bits = explode('.', $filename);
+
+    if (count($bits) > 1) {
+        $mt = new MimeTypes();
+        return $mt->extensionToMimeType(mb_strtolower($bits[count($bits) - 1]));
+    }
+
+    else {
+        return 'application/octet-stream';
+    }
 }
