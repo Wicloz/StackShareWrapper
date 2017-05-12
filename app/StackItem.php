@@ -7,10 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * App\StackItem
  *
+ * @property int $id
+ * @property string $path
+ * @property string $path_slug
+ * @property string $path_hash
+ * @property int $parent_id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
  * @property-read array $breadcrumbs
  * @property-read string $name
  * @property-read string $path_clean
- * @property-write mixed $path
  * @mixin \Eloquent
  */
 class StackItem extends Model
