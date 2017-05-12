@@ -68,19 +68,10 @@ class StackFile extends StackItem
             case 'image':
                 $baseurl = config('stack.baseurl');
                 $shareid = config('stack.shareid');
-                return $baseurl . '/public-share/' . $shareid . '/preview?path=' . $this->path . '&mode=thumbnail';
-
-            case 'video':
-                return url('/media/thumbnails/video.svg');
-
-            case 'audio':
-                return url('/media/thumbnails/audio.svg');
-
-            case 'text':
-                return url('/media/thumbnails/text.svg');
+                return "{$baseurl}/public-share/{$shareid}/preview?path={$this->path}&mode=thumbnail";
 
             default:
-                return url('/media/thumbnails/file.svg');
+                return url("/media/thumbnails/{$this->type}.svg");
         }
 
     }
@@ -93,6 +84,6 @@ class StackFile extends StackItem
         $baseurl = config('stack.baseurl');
         $shareid = config('stack.shareid');
 
-        return $baseurl . '/public-share/' . $shareid . '/preview?path=' . $this->path . '&mode=full';
+        return "{$baseurl}/public-share/{$shareid}/preview?path={$this->path}&mode=full";
     }
 }

@@ -19,7 +19,7 @@ class Downloader
         }, $url);
 
         if ($tries >= 8) {
-            throw new \Exception('Download Failed: \''.$url.'\' after '.$tries.' tries');
+            throw new \Exception("Download Failed: '{$url}' after {$tries} tries.");
         }
 
         else {
@@ -32,7 +32,7 @@ class Downloader
         }
 
         if (empty($response)) {
-            $response = Self::downloadPage($url, $tries + 1);
+            $response = self::downloadPage($url, $tries + 1);
         }
 
         return $response;
@@ -49,6 +49,6 @@ class Downloader
         $baseurl = config('stack.baseurl');
         $shareid = config('stack.shareid');
 
-        return json_decode(self::downloadPage($baseurl . '/public-share/' . $shareid . '/list?public=true&token=' . $shareid . '&type=folder&offset=0&limit=0&dir=' . $path));
+        return json_decode(self::downloadPage("{$baseurl}/public-share/{$shareid}/list?public=true&token={$shareid}&type=folder&offset=0&limit=0&dir={$path}"));
     }
 }
