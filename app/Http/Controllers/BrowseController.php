@@ -76,8 +76,28 @@ class BrowseController extends Controller
      */
     public function file(StackFile $file)
     {
-        return view('file', [
-            'item' => $file,
-        ]);
+        if (request()->has('dl')) {
+            header("accept-ranges: bytes");
+            header("content-disposition: attachment; filename=\"{$file->name}\"");
+            header("content-length: {$file->size}");
+            header("content-type: {$file->mimetype}");
+            readfile(cleanUrl($file->preview_full));
+            return null;
+        }
+
+        elseif (request()->has('full')) {
+            header("accept-ranges: bytes");
+            header("content-disposition: filename=\"{$file->name}\"");
+            header("content-length: {$file->size}");
+            header("content-type: {$file->mimetype}");
+            readfile(cleanUrl($file->preview_full));
+            return null;
+        }
+
+        else {
+            return view('file', [
+                'item' => $file,
+            ]);
+        }
     }
 }

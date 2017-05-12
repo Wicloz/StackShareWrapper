@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use App\Stack\Downloaders;
 
 /**
  * App\StackFile
@@ -19,6 +20,7 @@ namespace App;
  * @property-read string $preview_full
  * @property-read string $preview_thumb
  * @property-read string $type
+ * @property-read string $size
  * @property-read \App\StackFolder $parent
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereId($value)
@@ -94,5 +96,12 @@ class StackFile extends StackItem
         $shareid = config('stack.shareid');
 
         return "{$baseurl}/public-share/{$shareid}/preview?path={$this->path}&mode=full";
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getSizeAttribute() {
+        return Downloaders::getFileSize($this->download_remote);
     }
 }

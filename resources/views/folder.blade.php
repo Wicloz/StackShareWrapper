@@ -25,7 +25,7 @@
                         </td>
 
                         <td>
-                            <a href="{{ url('/folder/' . $subFolder->path_hash) }}" title="Permalink">
+                            <a href="{{ url("/folder/{$subFolder->path_hash}") }}" title="Permalink">
                                 <img class="action-icon" src="{{ url('/media/icons/link.svg') }}" alt="link">
                             </a>
                         </td>
@@ -43,11 +43,15 @@
                         </td>
 
                         <td>
-                            <a href="{{ url('/file/' . $subFile->path_hash) }}" title="Permalink">
+                            <a href="{{ url("/file/{$subFile->path_hash}?full=1") }}" title="Share">
                                 <img class="action-icon" src="{{ url('/media/icons/link.svg') }}" alt="link">
                             </a>
                         </td>
-                        <td></td>
+                        <td>
+                            <a href="{{ url("/file/{$subFile->path_hash}?dl=1") }}" title="Download">
+                                <img class="action-icon" src="{{ url('/media/icons/download.svg') }}" alt="download">
+                            </a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
