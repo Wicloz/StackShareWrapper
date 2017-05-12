@@ -4,6 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\StackItem
+ *
+ * @property-read array $breadcrumbs
+ * @property-read string $name
+ * @property-read string $path_clean
+ * @property-write mixed $path
+ * @mixin \Eloquent
+ */
 class StackItem extends Model
 {
     /**

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.18 on 2017-05-08.
+ * Generated for Laravel 5.4.22 on 2017-05-12.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -1354,13 +1354,13 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $command
          * @param array $parameters
-         * @return void 
+         * @return \Illuminate\Foundation\Bus\PendingDispatch 
          * @static 
          */
         public static function queue($command, $parameters = array())
         {
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            \App\Console\Kernel::queue($command, $parameters);
+            return \App\Console\Kernel::queue($command, $parameters);
         }
         
         /**
@@ -1913,6 +1913,31 @@ namespace Illuminate\Support\Facades {
         public static function guest()
         {
             return \Illuminate\Auth\SessionGuard::guest();
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro)
+        {
+            \Illuminate\Auth\SessionGuard::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name)
+        {
+            return \Illuminate\Auth\SessionGuard::hasMacro($name);
         }
         
     }         
@@ -4080,7 +4105,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string|\Closure $listener
          * @param bool $wildcard
-         * @return mixed 
+         * @return \Closure 
          * @static 
          */
         public static function makeListener($listener, $wildcard = false)
@@ -5577,6 +5602,31 @@ namespace Illuminate\Support\Facades {
             return \Illuminate\Mail\Mailer::setQueue($queue);
         }
         
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro)
+        {
+            \Illuminate\Mail\Mailer::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name)
+        {
+            return \Illuminate\Mail\Mailer::hasMacro($name);
+        }
+        
     }         
 
     class Notification {
@@ -6239,6 +6289,19 @@ namespace Illuminate\Support\Facades {
         public static function connection($name = null)
         {
             return \Illuminate\Redis\RedisManager::connection($name);
+        }
+        
+        /**
+         * Resolve the given connection by name.
+         *
+         * @param string|null $name
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @throws \InvalidArgumentException
+         * @static 
+         */
+        public static function resolve($name = null)
+        {
+            return \Illuminate\Redis\RedisManager::resolve($name);
         }
         
     }         
@@ -7016,7 +7079,7 @@ namespace Illuminate\Support\Facades {
          * ("Client-Ip" for instance), configure it via "setTrustedHeaderName()" with
          * the "client-ip" key.
          *
-         * @return string The client IP address
+         * @return string|null The client IP address
          * @see getClientIps()
          * @see http://en.wikipedia.org/wiki/X-Forwarded-For
          * @static 
@@ -7119,7 +7182,7 @@ namespace Illuminate\Support\Facades {
          * If your reverse proxy uses a different header name than "X-Forwarded-Port",
          * configure it via "setTrustedHeaderName()" with the "client-port" key.
          *
-         * @return string 
+         * @return int|string can be a string if fetched from the server bag
          * @static 
          */
         public static function getPort()
@@ -11945,6 +12008,75 @@ namespace Barryvdh\Debugbar {
     }         
 }
     
+namespace Cocur\Slugify\Bridge\Laravel {
+
+    class SlugifyFacade {
+        
+        /**
+         * Returns the slug-version of the string.
+         *
+         * @param string $string String to slugify
+         * @param string|array|null $options Options
+         * @return string Slugified version of the string
+         * @static 
+         */
+        public static function slugify($string, $options = null)
+        {
+            return \Cocur\Slugify\Slugify::slugify($string, $options);
+        }
+        
+        /**
+         * Adds a custom rule to Slugify.
+         *
+         * @param string $character Character
+         * @param string $replacement Replacement character
+         * @return \Slugify 
+         * @static 
+         */
+        public static function addRule($character, $replacement)
+        {
+            return \Cocur\Slugify\Slugify::addRule($character, $replacement);
+        }
+        
+        /**
+         * Adds multiple rules to Slugify.
+         *
+         * @param array  <string,string> $rules
+         * @return \Slugify 
+         * @static 
+         */
+        public static function addRules($rules)
+        {
+            return \Cocur\Slugify\Slugify::addRules($rules);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $ruleSet
+         * @return \Slugify 
+         * @static 
+         */
+        public static function activateRuleSet($ruleSet)
+        {
+            return \Cocur\Slugify\Slugify::activateRuleSet($ruleSet);
+        }
+        
+        /**
+         * Static method to create new instance of {@see Slugify}.
+         *
+         * @param array  <string,mixed> $options
+         * @return \Slugify 
+         * @static 
+         */
+        public static function create($options = array())
+        {
+            return \Cocur\Slugify\Slugify::create($options);
+        }
+        
+    }         
+}
+    
     
 namespace {
 
@@ -12013,6 +12145,18 @@ namespace {
     class View extends \Illuminate\Support\Facades\View {}
     
     class Eloquent extends \Illuminate\Database\Eloquent\Model {    
+        /**
+         * Create and return and un-saved model instance.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function make($attributes = array())
+        {
+            return \Illuminate\Database\Eloquent\Builder::make($attributes);
+        }
+        
         /**
          * Register a new global scope.
          *
@@ -12432,6 +12576,18 @@ namespace {
         public static function without($relations)
         {
             return \Illuminate\Database\Eloquent\Builder::without($relations);
+        }
+        
+        /**
+         * Create a new instance of the model being queried.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function newModelInstance($attributes = array())
+        {
+            return \Illuminate\Database\Eloquent\Builder::newModelInstance($attributes);
         }
         
         /**
@@ -13974,6 +14130,8 @@ namespace {
         }
     
     class Debugbar extends \Barryvdh\Debugbar\Facade {}
+    
+    class Slugify extends \Cocur\Slugify\Bridge\Laravel\SlugifyFacade {}
     
 }
 

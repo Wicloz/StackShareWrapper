@@ -4,6 +4,32 @@ namespace App;
 
 use App\Stack\Downloader;
 
+/**
+ * App\StackFolder
+ *
+ * @property int $id
+ * @property string $path
+ * @property string $path_slug
+ * @property string $path_hash
+ * @property int $parent_id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read array $breadcrumbs
+ * @property-read string $name
+ * @property-read string $path_clean
+ * @property-read string $preview_thumb
+ * @property-read \App\StackFolder $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\StackFile[] $subFiles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\StackFolder[] $subFolders
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFolder whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFolder whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFolder whereParentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFolder wherePath($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFolder wherePathHash($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFolder wherePathSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFolder whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class StackFolder extends StackItem
 {
     /**

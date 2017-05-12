@@ -2,6 +2,34 @@
 
 namespace App;
 
+/**
+ * App\StackFile
+ *
+ * @property int $id
+ * @property string $path
+ * @property string $path_slug
+ * @property string $path_hash
+ * @property string $mimetype
+ * @property int $parent_id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read array $breadcrumbs
+ * @property-read string $name
+ * @property-read string $path_clean
+ * @property-read string $preview_full
+ * @property-read string $preview_thumb
+ * @property-read string $type
+ * @property-read \App\StackFolder $parent
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereMimetype($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereParentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFile wherePath($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFile wherePathHash($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFile wherePathSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class StackFile extends StackItem
 {
     /**
