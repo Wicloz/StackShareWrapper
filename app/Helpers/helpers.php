@@ -45,3 +45,17 @@ function filenameToMimeType($filename) {
         return 'application/octet-stream';
     }
 }
+
+/**
+ * @param $url
+ * @param bool $spacesToPlus
+ * @return mixed
+ */
+function cleanUrl($url, $spacesToPlus = true) {
+    if ($spacesToPlus) {
+        $url = str_replace(' ', '+', $url);
+    }
+    return preg_replace_callback('/([^a-zA-Z0-9\\%\\=\\:\\+\\&\\?\\-\\_\\/\\\\])/u', function($matches) {
+        return urlencode($matches[1]);
+    }, $url);
+}

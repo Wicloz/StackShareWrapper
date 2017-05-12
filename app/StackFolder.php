@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Stack\Downloader;
+use App\Stack\Downloaders;
 
 /**
  * App\StackFolder
@@ -76,7 +76,7 @@ class StackFolder extends StackItem
      */
     public function refresh()
     {
-        $json = Downloader::downloadList($this->path);
+        $json = Downloaders::downloadStackList($this->path);
 
         foreach ($json->nodes as $node) {
             if ($node->mimetype === 'httpd/unix-directory') {

@@ -12,7 +12,7 @@
         <audio class="preview-audio" src="{{ $item->preview_full }}" controls autoplay></audio>
 
     @elseif ($item->type === 'text')
-        <pre class="preview-file">{{ \App\Stack\Downloader::downloadPage($item->preview_full) }}</pre>
+        <pre class="preview-file">{{ \App\Stack\Downloaders::downloadPage($item->preview_full) }}</pre>
 
     @else
         <p>No Preview Available</p>
