@@ -6,10 +6,10 @@
         <img class="preview-image" src="{{ $item->preview_full }}" alt="{{ $item->name }}">
 
     @elseif ($item->type === 'video')
-        <video class="preview-video" src="{{ $item->preview_full }}" controls autoplay>
+        <video class="preview-video" src="{{ $item->preview_full }}" controls autoplay></video>
 
     @elseif ($item->type === 'audio')
-        <audio class="preview-audio" src="{{ $item->preview_full }}" controls autoplay>
+        <audio class="preview-audio" src="{{ $item->preview_full }}" controls autoplay></audio>
 
     @elseif ($item->type === 'text')
         <pre class="preview-file">{{ \App\Stack\Downloader::downloadPage($item->preview_full) }}</pre>
