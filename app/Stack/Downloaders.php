@@ -29,7 +29,7 @@ class Downloaders
             curl_close($ch);
         }
 
-        if (empty($response)) {
+        if (!isset($response)) {
             $response = self::downloadPage($url, $tries + 1);
         }
 
@@ -51,8 +51,10 @@ class Downloaders
     }
 
     /**
+     * Gets the size for the requested remote file as defined in the 'content-length' header.
+     *
      * @param $url
-     * @return mixed|null
+     * @return float|null
      */
     public static function getFileSize($url) {
         $url = cleanUrl($url);
@@ -67,7 +69,7 @@ class Downloaders
         $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
         curl_close($ch);
 
-        if ($size >= 0) {
+        if (!empty($size) && $size >= 0) {
             return $size;
         } else {
             return null;
