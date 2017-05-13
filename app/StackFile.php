@@ -42,6 +42,22 @@ class StackFile extends StackItem
     protected $fillable = ['name', 'path', 'parent', 'mimetype'];
 
     /**
+     * Extensions for files that can be previewed as code.
+     *
+     * @var array
+     */
+    protected $codeExtensions = [
+        'php',
+        'sh',
+        'bat',
+        'php',
+        'js',
+        'cs',
+        'cpp',
+        'c++',
+    ];
+
+    /**
      * Get the parent folder for this file.
      */
     public function parent()
@@ -62,7 +78,23 @@ class StackFile extends StackItem
      */
     public function getTypeAttribute()
     {
-        return explode('/', $this->mimetype)[0];
+        $bits = explode('.', $this->name);
+
+        if ($this->mimetype === 'application/json') {
+            return 'json';
+        }
+
+        elseif (count($bits) > 1 && $bits[count($bits) - 1] === 'md') {
+            return 'markdown';
+        }
+
+        elseif (count($bits) > 1 && in_array($bits[count($bits) - 1], $this->codeExtensions)) {
+            return 'code';
+        }
+
+        else {
+            return explode('/', $this->mimetype)[0];
+        }
     }
 
     /**

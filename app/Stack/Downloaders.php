@@ -69,7 +69,7 @@ class Downloaders
         $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
         curl_close($ch);
 
-        if (!empty($size) && $size >= 0) {
+        if ((!empty($size) || $size === 0) && $size >= 0) {
             return $size;
         } else {
             return null;
