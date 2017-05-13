@@ -56,7 +56,8 @@ class Downloaders
      * @param $url
      * @return float|null
      */
-    public static function getFileSize($url) {
+    public static function getFileSize($url)
+    {
         $url = cleanUrl($url);
 
         $ch = curl_init();

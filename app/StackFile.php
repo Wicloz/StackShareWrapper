@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+
 use App\Stack\Downloaders;
 
 /**
@@ -24,7 +25,6 @@ use App\Stack\Downloaders;
  * @property-read \App\StackFolder $parent
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereMimetype($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereParentId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile wherePath($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile wherePathHash($value)
@@ -137,7 +137,8 @@ class StackFile extends StackItem
     /**
      * @return float|null
      */
-    public function getSizeAttribute() {
+    public function getSizeAttribute()
+    {
         return Downloaders::getFileSize($this->download_remote);
     }
 }

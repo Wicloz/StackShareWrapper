@@ -82,7 +82,7 @@ class StackFolder extends StackItem
             if ($node->mimetype === 'httpd/unix-directory') {
                 $this->subFolders()->updateOrCreate([
                     'path' => $node->path,
-                ],[]);
+                ], []);
             }
 
             else {
@@ -92,7 +92,7 @@ class StackFolder extends StackItem
             }
         }
 
-        $this->subFolders()->whereNotIn('path',  collect($json->nodes)->pluck('path'))->delete();
-        $this->subFiles()->whereNotIn('path',  collect($json->nodes)->pluck('path'))->delete();
+        $this->subFolders()->whereNotIn('path', collect($json->nodes)->pluck('path'))->delete();
+        $this->subFiles()->whereNotIn('path', collect($json->nodes)->pluck('path'))->delete();
     }
 }

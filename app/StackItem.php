@@ -24,14 +24,16 @@ class StackItem extends Model
     /**
      * @return string
      */
-    public function getPathCleanAttribute() {
+    public function getPathCleanAttribute()
+    {
         return $this->path === '/' ? '' : $this->path;
     }
 
     /**
      * @return string
      */
-    public function getNameAttribute() {
+    public function getNameAttribute()
+    {
         $names = explode('/', $this->path);
         return $names[count($names) - 1];
     }
@@ -39,7 +41,8 @@ class StackItem extends Model
     /**
      * @return array
      */
-    public function getBreadcrumbsAttribute() {
+    public function getBreadcrumbsAttribute()
+    {
         $breadcrumbs = [];
 
         if (!empty($this->path_clean)) {
@@ -58,7 +61,8 @@ class StackItem extends Model
      * @param $value
      * @throws \Exception
      */
-    public function setPathAttribute($value) {
+    public function setPathAttribute($value)
+    {
         if (empty($this->attributes['path'])) {
             $this->attributes['path'] = $value;
             $this->attributes['path_hash'] = hashify($value);
