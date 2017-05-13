@@ -17,7 +17,7 @@ function htmlentities_decode($string) {
  * @return string
  */
 function slugify($string) {
-    $slugify = new \Cocur\Slugify\Slugify(['regexp' => '/([^A-Za-z0-9\.\-])+/']);
+    $slugify = new \Cocur\Slugify\Slugify();
     return $slugify->slugify($string);
 }
 

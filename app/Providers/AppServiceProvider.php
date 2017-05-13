@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        /**
+         * <code>
+         * {? $old_section = "whatever" ?}
+         * </code>
+         */
+        Blade::extend(function($value) {
+            return preg_replace('/\{\?(.+)\?\}/', '<?php ${1} ?>', $value);
+        });
     }
 }
