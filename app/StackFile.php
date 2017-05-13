@@ -49,7 +49,6 @@ class StackFile extends StackItem
      * @var array
      */
     protected $codeExtensions = [
-        'php',
         'sh',
         'bat',
         'php',
@@ -57,6 +56,9 @@ class StackFile extends StackItem
         'cs',
         'cpp',
         'c++',
+        'html',
+        'css',
+        'scss',
     ];
 
     /**
@@ -68,6 +70,23 @@ class StackFile extends StackItem
         'application/x-php',
         'application/x-javascript',
         'application/x-shellscript',
+        'text/html',
+        'text/css',
+    ];
+
+    /**
+     * Mime types for compressed files.
+     *
+     * @var array
+     */
+    protected $packageMimetypes = [
+        'application/zip',
+        'application/x-gzip',
+        'application/x-bzip',
+        'application/x-xz',
+        'application/x-tar',
+        'application/x-ms-wim',
+        'application/x-7z-compressed',
     ];
 
     /**
@@ -97,25 +116,26 @@ class StackFile extends StackItem
     {
         $nameBits = explode('.', $this->name);
         $mimeBits = explode('/', $this->mimetype);
+        $mimeClean = (count($mimeBits) > 1) ? ($mimeBits[0] . '/' . $mimeBits[1]) : ($this->mimetype);
 
         if (count($nameBits) > 1 && $nameBits[count($nameBits) - 1] === 'md') { // TODO
             return 'markdown';
         }
 
-        elseif ((count($nameBits) > 1 && in_array($nameBits[count($nameBits) - 1], $this->codeExtensions)) || in_array($this->mimetype, $this->codeMimetypes)) {
+        elseif ((count($nameBits) > 1 && in_array($nameBits[count($nameBits) - 1], $this->codeExtensions)) || in_array($mimeClean, $this->codeMimetypes)) {
             return 'code';
         }
 
-        elseif ($this->mimetype === 'application/json') {
+        elseif ($mimeClean === 'application/json') {
             return 'json';
         }
 
-        elseif ($this->mimetype === 'application/x-msdownload' || $this->mimetype === 'application/x-ms-dos-executable') {
-            return 'executable';
+        elseif (in_array($mimeClean, $this->packageMimetypes)) {
+            return 'package';
         }
 
-        elseif (count($mimeBits) >= 2 && str_starts_with($mimeBits[1], 'x-')) {
-            return 'code';
+        elseif ($mimeClean === 'application/x-msdownload' || $mimeClean === 'application/x-ms-dos-executable') {
+            return 'executable';
         }
 
         else {

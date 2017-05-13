@@ -12,21 +12,42 @@
         <audio class="preview-audio" src="{{ $item->preview_full }}" controls autoplay></audio>
 
     @elseif ($item->type === 'markdown')
-        {{-- TODO --}}
-
-    @elseif ($item->type === 'json')
-        {{-- TODO --}}
-
-    @elseif ($item->type === 'code')
-        {{-- TODO --}}
-
-    @else
         {? $content = \App\Stack\Downloaders::downloadPage($item->preview_full) ?}
         @if ($item->type === 'text' || !empty(trim(htmlentities($content))))
             <pre class="preview-text">{{ $content }}</pre>
         @else
             <p>No Preview Available</p>
         @endif
+        {{-- TODO --}}
+
+    @elseif ($item->type === 'json')
+        {? $content = \App\Stack\Downloaders::downloadPage($item->preview_full) ?}
+        @if ($item->type === 'text' || !empty(trim(htmlentities($content))))
+            <pre class="preview-text">{{ $content }}</pre>
+        @else
+            <p>No Preview Available</p>
+        @endif
+        {{-- TODO --}}
+
+    @elseif ($item->type === 'code')
+        {? $content = \App\Stack\Downloaders::downloadPage($item->preview_full) ?}
+        @if ($item->type === 'text' || !empty(trim(htmlentities($content))))
+            <pre class="preview-text">{{ $content }}</pre>
+        @else
+            <p>No Preview Available</p>
+        @endif
+        {{-- TODO --}}
+
+    @elseif ($item->type !== 'package')
+        {? $content = \App\Stack\Downloaders::downloadPage($item->preview_full) ?}
+        @if ($item->type === 'text' || !empty(trim(htmlentities($content))))
+            <pre class="preview-text">{{ $content }}</pre>
+        @else
+            <p>No Preview Available</p>
+        @endif
+
+    @else
+        <p>No Preview Available</p>
 
     @endif
 @endsection
