@@ -24,6 +24,7 @@
                         </td>
 
                         <td>
+                            <img class="share-icon pull-right invisible" src="{{ url('/media/icons/download.svg') }}" alt="">
                             <a href="{{ url("/folder/{$subFolder->path_hash}") }}" title="Permalink">
                                 <img class="share-icon pull-right" src="{{ url('/media/icons/link.svg') }}" alt="link">
                             </a>
@@ -41,11 +42,11 @@
                         </td>
 
                         <td>
-                            <a href="{{ url("/file/{$subFile->path_hash}?full=1") }}" title="Share">
-                                <img class="share-icon pull-right" src="{{ url('/media/icons/link.svg') }}" alt="link">
-                            </a>
                             <a href="{{ url("/file/{$subFile->path_hash}?dl=1") }}" title="Download">
                                 <img class="share-icon pull-right" src="{{ url('/media/icons/download.svg') }}" alt="download">
+                            </a>
+                            <a href="{{ url("/file/{$subFile->path_hash}?full=1") }}" title="Share">
+                                <img class="share-icon pull-right" src="{{ url('/media/icons/link.svg') }}" alt="link">
                             </a>
                         </td>
                     </tr>
