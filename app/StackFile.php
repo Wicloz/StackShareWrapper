@@ -31,6 +31,8 @@ use App\Stack\Downloaders;
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile wherePathSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $mimetype_remote
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereMimetypeRemote($value)
  */
 class StackFile extends StackItem
 {
@@ -39,7 +41,7 @@ class StackFile extends StackItem
      *
      * @var array
      */
-    protected $fillable = ['name', 'path', 'parent', 'mimetype'];
+    protected $fillable = ['name', 'path', 'parent', 'mimetype_remote'];
 
     /**
      * Extensions for files that can be previewed as code.
@@ -58,6 +60,17 @@ class StackFile extends StackItem
     ];
 
     /**
+     * Mime types for files that can be previewed as code.
+     *
+     * @var array
+     */
+    protected $codeMimetypes = [
+        'application/x-php',
+        'application/x-javascript',
+        'application/x-shellscript',
+    ];
+
+    /**
      * Get the parent folder for this file.
      */
     public function parent()
@@ -70,7 +83,11 @@ class StackFile extends StackItem
      */
     public function getMimetypeAttribute()
     {
-        return filenameToMimeType($this->name);
+        if ($this->mimetype_remote !== 'application/octet-stream') {
+            return $this->mimetype_remote;
+        } else {
+            return filenameToMimeType($this->name);
+        }
     }
 
     /**
@@ -78,13 +95,14 @@ class StackFile extends StackItem
      */
     public function getTypeAttribute()
     {
-        $bits = explode('.', $this->name);
+        $nameBits = explode('.', $this->name);
+        $mimeBits = explode('/', $this->mimetype);
 
-        if (count($bits) > 1 && $bits[count($bits) - 1] === 'md') {
+        if (count($nameBits) > 1 && $nameBits[count($nameBits) - 1] === 'md') { // TODO
             return 'markdown';
         }
 
-        elseif (count($bits) > 1 && in_array($bits[count($bits) - 1], $this->codeExtensions)) {
+        elseif ((count($nameBits) > 1 && in_array($nameBits[count($nameBits) - 1], $this->codeExtensions)) || in_array($this->mimetype, $this->codeMimetypes)) {
             return 'code';
         }
 
@@ -92,12 +110,16 @@ class StackFile extends StackItem
             return 'json';
         }
 
-        elseif ($this->mimetype === 'application/x-msdownload') {
+        elseif ($this->mimetype === 'application/x-msdownload' || $this->mimetype === 'application/x-ms-dos-executable') {
             return 'executable';
         }
 
+        elseif (count($mimeBits) >= 2 && str_starts_with($mimeBits[1], 'x-')) {
+            return 'code';
+        }
+
         else {
-            return explode('/', $this->mimetype)[0];
+            return $mimeBits[0];
         }
     }
 

@@ -20,6 +20,8 @@ class CreateStackFilesTable extends Migration
             $table->string('path_slug', 4096)->unique();
             $table->string('path_hash')->unique();
 
+            $table->string('mimetype_remote');
+
             $table->integer('parent_id')->unsinged();
             $table->timestamps();
 

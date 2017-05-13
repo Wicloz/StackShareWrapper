@@ -88,7 +88,9 @@ class StackFolder extends StackItem
             else {
                 $this->subFiles()->updateOrCreate([
                     'path' => $node->path,
-                ],[]);
+                ], [
+                    'mimetype_remote' => $node->mimetype,
+                ]);
             }
         }
 
