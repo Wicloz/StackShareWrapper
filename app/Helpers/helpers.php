@@ -59,3 +59,19 @@ function cleanUrl($url, $spacesToPlus = true) {
         return urlencode($matches[1]);
     }, $url);
 }
+
+/**
+ * @param $size
+ * @param int $decimals
+ * @param string $unit
+ * @return string
+ */
+function humanFileSize($size, $decimals = 2, $unit = '') {
+    if ((empty($unit) && $size >= 1 << 30) || $unit == 'GB')
+        return number_format($size / (1 << 30), $decimals) . 'GB';
+    if ((empty($unit) && $size >= 1 << 20) || $unit == 'MB')
+        return number_format($size / (1 << 20), $decimals) . 'MB';
+    if ((empty($unit) && $size >= 1 << 10) || $unit == 'KB')
+        return number_format($size / (1 << 10), $decimals) . 'KB';
+    return number_format($size) . ' bytes';
+}

@@ -80,16 +80,20 @@ class StackFile extends StackItem
     {
         $bits = explode('.', $this->name);
 
-        if ($this->mimetype === 'application/json') {
-            return 'json';
-        }
-
-        elseif (count($bits) > 1 && $bits[count($bits) - 1] === 'md') {
+        if (count($bits) > 1 && $bits[count($bits) - 1] === 'md') {
             return 'markdown';
         }
 
         elseif (count($bits) > 1 && in_array($bits[count($bits) - 1], $this->codeExtensions)) {
             return 'code';
+        }
+
+        elseif ($this->mimetype === 'application/json') {
+            return 'json';
+        }
+
+        elseif ($this->mimetype === 'application/x-msdownload') {
+            return 'executable';
         }
 
         else {
