@@ -79,7 +79,9 @@ class BrowseController extends Controller
         if (request()->has('dl')) {
             header("accept-ranges: bytes");
             header("content-disposition: attachment; filename=\"{$file->name}\"");
-            header("content-length: {$file->size}");
+            if (isset($file->size)) {
+                header("content-length: {$file->size}");
+            }
             header("content-type: {$file->mimetype}");
             readfile(cleanUrl($file->preview_full));
             return null;
@@ -88,7 +90,9 @@ class BrowseController extends Controller
         elseif (request()->has('full')) {
             header("accept-ranges: bytes");
             header("content-disposition: filename=\"{$file->name}\"");
-            header("content-length: {$file->size}");
+            if (isset($file->size)) {
+                header("content-length: {$file->size}");
+            }
             header("content-type: {$file->mimetype}");
             readfile(cleanUrl($file->preview_full));
             return null;
