@@ -83,6 +83,6 @@ class StackApi
         if (isset($file->size)) {
             header("content-length: {$file->size}");
         }
-        readfile(cleanUrl($file->file_full_remote));
+        readfile(cleanUrl($file->file_full));
     }
 }

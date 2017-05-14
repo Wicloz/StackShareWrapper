@@ -18,7 +18,6 @@ use App\Stack\Downloaders;
  * @property-read array $breadcrumbs
  * @property-read string $extension
  * @property-read string $file_full
- * @property-read string $file_full_remote
  * @property-read string $file_thumbnail
  * @property-read string $mimetype
  * @property-read string $name
@@ -135,19 +134,11 @@ class StackFile extends StackItem
     /**
      * @return string
      */
-    public function getFileFullRemoteAttribute()
+    public function getFileFullAttribute()
     {
         $baseurl = config('stack.baseurl');
         $shareid = config('stack.shareid');
         return "{$baseurl}/public-share/{$shareid}/preview?path={$this->path}&mode=full";
-    }
-
-    /**
-     * @return string
-     */
-    public function getFileFullAttribute()
-    {
-        return url("/file/{$this->path_hash}/?full=1");
     }
 
     /**
