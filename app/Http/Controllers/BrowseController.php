@@ -75,25 +75,15 @@ class BrowseController extends Controller
      */
     public function file(StackFile $file)
     {
-        if (request()->has('dl')) {
-            header("accept-ranges: bytes");
-            header("content-disposition: attachment; filename=\"{$file->name}\"");
-            if (isset($file->size)) {
-                header("content-length: {$file->size}");
-            }
-            header("content-type: {$file->mimetype}");
-            readfile(cleanUrl($file->preview_full));
+        if (request()->has('full') || request()->has('dl')) {
+            $stack = resolve('App\Stack\StackApi');
+            $stack->presentFile($file, request()->has('dl'));
             return null;
         }
 
-        elseif (request()->has('full')) {
-            header("accept-ranges: bytes");
-            header("content-disposition: filename=\"{$file->name}\"");
-            if (isset($file->size)) {
-                header("content-length: {$file->size}");
-            }
-            header("content-type: {$file->mimetype}");
-            readfile(cleanUrl($file->preview_full));
+        elseif (request()->has('thumbnail')) {
+            $stack = resolve('App\Stack\StackApi');
+            $stack->presentThumbnail($file);
             return null;
         }
 

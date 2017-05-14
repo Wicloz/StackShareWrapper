@@ -17,7 +17,7 @@
                 @foreach ($item->subFolders()->orderBy('path')->get() as $subFolder)
                     <tr>
                         <td>
-                            <img class="thumbnail preview-thumbnail" src="{{ $subFolder->preview_thumb }}" alt="">
+                            <img class="thumbnail preview-thumbnail" src="{{ $subFolder->file_thumbnail }}" alt="">
                         </td>
                         <td>
                             <a class="item-name" href="{{ url($subFolder->path_slug) }}">{{ $subFolder->name }}</a>
@@ -35,7 +35,7 @@
                 @foreach ($item->subFiles()->orderBy('path')->get() as $subFile)
                     <tr>
                         <td>
-                            <img class="thumbnail preview-thumbnail" src="{{ $subFile->preview_thumb }}" alt="">
+                            <img class="thumbnail preview-thumbnail" src="{{ $subFile->file_thumbnail }}" alt="">
                         </td>
                         <td>
                             <a class="item-name" href="{{ url($subFile->path_slug) }}">{{ $subFile->name }}</a>

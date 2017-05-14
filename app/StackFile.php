@@ -11,29 +11,31 @@ use App\Stack\Downloaders;
  * @property string $path
  * @property string $path_slug
  * @property string $path_hash
- * @property string $mimetype
+ * @property string $mimetype_remote
  * @property int $parent_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read array $breadcrumbs
+ * @property-read string $extension
+ * @property-read string $file_full
+ * @property-read string $file_thumbnail
+ * @property-read string $mimetype
  * @property-read string $name
  * @property-read string $path_clean
- * @property-read string $preview_full
- * @property-read string $preview_thumb
+ * @property-read float|null $size
  * @property-read string $type
- * @property-read string $size
  * @property-read \App\StackFolder $parent
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereMimetypeRemote($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereParentId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile wherePath($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile wherePathHash($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile wherePathSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property string $mimetype_remote
- * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereMimetypeRemote($value)
- * @property-read string $extension
+ * @property-read string $file_full_remote
+ * @property-read string $file_thumbnail_remote
  */
 class StackFile extends StackItem
 {
@@ -113,13 +115,21 @@ class StackFile extends StackItem
     /**
      * @return string
      */
-    public function getPreviewThumbAttribute()
+    public function getFileThumbnailRemoteAttribute()
+    {
+        $baseurl = config('stack.baseurl');
+        $shareid = config('stack.shareid');
+        return "{$baseurl}/public-share/{$shareid}/preview?path={$this->path}&mode=thumbnail";
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileThumbnailAttribute()
     {
         switch ($this->type) {
             case 'image':
-                $baseurl = config('stack.baseurl');
-                $shareid = config('stack.shareid');
-                return "{$baseurl}/public-share/{$shareid}/preview?path={$this->path}&mode=thumbnail";
+                return url("/file/{$this->path_hash}/?thumbnail=1");
 
             default:
                 if (file_exists(public_path("/media/thumbnails/{$this->type}.svg"))) {
@@ -129,18 +139,24 @@ class StackFile extends StackItem
                 }
 
         }
-
     }
 
     /**
      * @return string
      */
-    public function getPreviewFullAttribute()
+    public function getFileFullRemoteAttribute()
     {
         $baseurl = config('stack.baseurl');
         $shareid = config('stack.shareid');
-
         return "{$baseurl}/public-share/{$shareid}/preview?path={$this->path}&mode=full";
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileFullAttribute()
+    {
+        return url("/file/{$this->path_hash}/?full=1");
     }
 
     /**
@@ -148,8 +164,8 @@ class StackFile extends StackItem
      */
     public function getSizeAttribute()
     {
-        return null; // TODO
-//        return Downloaders::getFileSize($this->download_remote);
+        $stack = resolve('App\Stack\StackApi');
+        return intval(round($stack->getFileSize($this->path)));
     }
 
     /**

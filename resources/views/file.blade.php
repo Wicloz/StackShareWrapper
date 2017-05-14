@@ -3,13 +3,13 @@
 
 @section('content-center')
     @if ($item->type === 'image')
-        <img class="preview-image" src="{{ $item->preview_full }}" alt="{{ $item->name }}">
+        <img class="preview-image" src="{{ $item->file_full }}" alt="{{ $item->name }}">
 
     @elseif ($item->type === 'video')
-        <video class="preview-video" src="{{ $item->preview_full }}" controls autoplay></video>
+        <video class="preview-video" src="{{ $item->file_full }}" controls autoplay></video>
 
     @elseif ($item->type === 'audio')
-        <audio class="preview-audio" src="{{ $item->preview_full }}" controls autoplay></audio>
+        <audio class="preview-audio" src="{{ $item->file_full }}" controls autoplay></audio>
 
     @elseif ($item->type === 'markdown')
         {{-- TODO --}}
@@ -33,7 +33,7 @@
         <p>No Preview Available</p>
 
     @else
-        {? $content = \App\Stack\Downloaders::downloadPage($item->preview_full) ?}
+        {? $content = \App\Stack\Downloaders::downloadPage($item->file_full) ?}
         @if ($item->type === 'text' || !empty(trim(htmlentities($content))))
             <pre class="preview-text">{{ $content }}</pre>
         @else

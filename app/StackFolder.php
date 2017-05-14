@@ -16,9 +16,9 @@ use App\Stack\StackApi;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read array $breadcrumbs
+ * @property-read string $file_thumbnail
  * @property-read string $name
  * @property-read string $path_clean
- * @property-read string $preview_thumb
  * @property-read \App\StackFolder $parent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\StackFile[] $subFiles
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\StackFolder[] $subFolders
@@ -67,7 +67,7 @@ class StackFolder extends StackItem
     /**
      * @return string
      */
-    public function getPreviewThumbAttribute()
+    public function getFileThumbnailAttribute()
     {
         return url('/media/thumbnails/folder.svg');
     }
@@ -78,7 +78,7 @@ class StackFolder extends StackItem
     public function refresh()
     {
         $stack = resolve('App\Stack\StackApi');
-        $json = $stack->downloadStackList($this->path);
+        $json = $stack->getFolderInfo($this->path);
 
         foreach ($json->nodes as $node) {
             if ($node->mimetype === 'httpd/unix-directory') {
