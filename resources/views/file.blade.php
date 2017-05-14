@@ -12,42 +12,30 @@
         <audio class="preview-audio" src="{{ $item->preview_full }}" controls autoplay></audio>
 
     @elseif ($item->type === 'markdown')
-        {? $content = \App\Stack\Downloaders::downloadPage($item->preview_full) ?}
-        @if ($item->type === 'text' || !empty(trim(htmlentities($content))))
-            <pre class="preview-text">{{ $content }}</pre>
-        @else
-            <p>No Preview Available</p>
-        @endif
-        {{-- TODO --}}
-
-    @elseif ($item->type === 'json')
-        {? $content = \App\Stack\Downloaders::downloadPage($item->preview_full) ?}
-        @if ($item->type === 'text' || !empty(trim(htmlentities($content))))
-            <pre class="preview-text">{{ $content }}</pre>
-        @else
-            <p>No Preview Available</p>
-        @endif
         {{-- TODO --}}
 
     @elseif ($item->type === 'code')
-        {? $content = \App\Stack\Downloaders::downloadPage($item->preview_full) ?}
-        @if ($item->type === 'text' || !empty(trim(htmlentities($content))))
-            <pre class="preview-text">{{ $content }}</pre>
-        @else
-            <p>No Preview Available</p>
-        @endif
         {{-- TODO --}}
 
-    @elseif ($item->type !== 'package')
+    @elseif ($item->type === 'pdf')
+        {{-- TODO --}}
+
+    @elseif ($item->type === 'epub')
+        {{-- TODO --}}
+
+    @elseif ($item->type === 'json')
+        {{-- TODO --}}
+
+    @elseif ($item->type === 'package' || $item->type === 'executable')
+        <p>No Preview Available</p>
+
+    @else
         {? $content = \App\Stack\Downloaders::downloadPage($item->preview_full) ?}
         @if ($item->type === 'text' || !empty(trim(htmlentities($content))))
             <pre class="preview-text">{{ $content }}</pre>
         @else
             <p>No Preview Available</p>
         @endif
-
-    @else
-        <p>No Preview Available</p>
 
     @endif
 @endsection

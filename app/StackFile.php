@@ -118,28 +118,50 @@ class StackFile extends StackItem
         $mimeBits = explode('/', $this->mimetype);
         $mimeClean = (count($mimeBits) > 1) ? ($mimeBits[0] . '/' . $mimeBits[1]) : ($this->mimetype);
 
+        // Markdown by extension
         if (count($nameBits) > 1 && $nameBits[count($nameBits) - 1] === 'md') { // TODO
             return 'markdown';
         }
 
+        // Code by extension and mimetype
         elseif ((count($nameBits) > 1 && in_array($nameBits[count($nameBits) - 1], $this->codeExtensions)) || in_array($mimeClean, $this->codeMimetypes)) {
             return 'code';
         }
 
+        // Minor types by mimetype
+        elseif ($mimeClean === 'application/pdf') {
+            return 'pdf';
+        }
+        elseif ($mimeClean === 'application/epub+zip') {
+            return 'epub';
+        }
         elseif ($mimeClean === 'application/json') {
             return 'json';
         }
 
+        // Compressed files by mimetype
         elseif (in_array($mimeClean, $this->packageMimetypes)) {
             return 'package';
         }
 
+        // Windows executables by mimetype
         elseif ($mimeClean === 'application/x-msdownload' || $mimeClean === 'application/x-ms-dos-executable') {
             return 'executable';
         }
 
-        else {
+        // Default from mimetype
+        elseif (!empty($mimeBits[0])) {
             return $mimeBits[0];
+        }
+
+        // Default from extension
+        elseif (count($nameBits) > 1) {
+            return $nameBits[count($nameBits) - 1];
+        }
+
+        // Fallback
+        else {
+            return 'file';
         }
     }
 
