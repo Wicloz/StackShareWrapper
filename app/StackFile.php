@@ -43,7 +43,7 @@ class StackFile extends StackItem
      *
      * @var array
      */
-    protected $fillable = ['name', 'path', 'size', 'mimetype_remote', 'parent'];
+    protected $fillable = ['path', 'size', 'mimetype_remote', 'parent'];
 
     /**
      * Extensions for files that can be previewed as code.

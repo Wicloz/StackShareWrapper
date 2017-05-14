@@ -40,7 +40,7 @@ class StackFolder extends StackItem
      *
      * @var array
      */
-    protected $fillable = ['name', 'path', 'size', 'parent'];
+    protected $fillable = ['path', 'size', 'parent'];
 
     /**
      * Get the parent folder for this folder.
