@@ -18,6 +18,7 @@ use App\Stack\Downloaders;
  * @property-read array $breadcrumbs
  * @property-read string $extension
  * @property-read string $file_full
+ * @property-read string $file_full_remote
  * @property-read string $file_thumbnail
  * @property-read string $mimetype
  * @property-read string $name
@@ -34,8 +35,6 @@ use App\Stack\Downloaders;
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile wherePathSlug($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property-read string $file_full_remote
- * @property-read string $file_thumbnail_remote
  */
 class StackFile extends StackItem
 {
@@ -115,21 +114,13 @@ class StackFile extends StackItem
     /**
      * @return string
      */
-    public function getFileThumbnailRemoteAttribute()
-    {
-        $baseurl = config('stack.baseurl');
-        $shareid = config('stack.shareid');
-        return "{$baseurl}/public-share/{$shareid}/preview?path={$this->path}&mode=thumbnail";
-    }
-
-    /**
-     * @return string
-     */
     public function getFileThumbnailAttribute()
     {
         switch ($this->type) {
             case 'image':
-                return url("/file/{$this->path_hash}/?thumbnail=1");
+                $baseurl = config('stack.baseurl');
+                $shareid = config('stack.shareid');
+                return "{$baseurl}/public-share/{$shareid}/preview?path={$this->path}&mode=thumbnail";
 
             default:
                 if (file_exists(public_path("/media/thumbnails/{$this->type}.svg"))) {

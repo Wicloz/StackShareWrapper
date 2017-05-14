@@ -85,16 +85,4 @@ class StackApi
         }
         readfile(cleanUrl($file->file_full_remote));
     }
-
-    /**
-     * Sets headers and presents a thumbnail for a remote stack file.
-     *
-     * @param StackFile $file
-     */
-    public function presentThumbnail(StackFile $file) {
-        header("accept-ranges: bytes");
-        header("content-disposition: filename=\"preview\"");
-        header("content-type: {$file->mimetype}");
-        readfile(cleanUrl($file->file_thumbnail_remote));
-    }
 }
