@@ -36,13 +36,11 @@ function hashify($string)
  * @param $filename
  * @return null|string
  */
-function filenameToMimeType($filename)
+function extensionToMimeType($extension)
 {
-    $bits = explode('.', $filename);
-
-    if (count($bits) > 1) {
+    if (!empty($extension)) {
         $mt = new MimeTypes();
-        return $mt->extensionToMimeType(mb_strtolower($bits[count($bits) - 1]));
+        return $mt->extensionToMimeType(mb_strtolower($extension));
     }
 
     else {

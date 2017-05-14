@@ -33,6 +33,7 @@ use App\Stack\Downloaders;
  * @mixin \Eloquent
  * @property string $mimetype_remote
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereMimetypeRemote($value)
+ * @property-read string $extension
  */
 class StackFile extends StackItem
 {
@@ -105,63 +106,7 @@ class StackFile extends StackItem
         if ($this->mimetype_remote !== 'application/octet-stream') {
             return $this->mimetype_remote;
         } else {
-            return filenameToMimeType($this->name);
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeAttribute()
-    {
-        $nameBits = explode('.', $this->name);
-        $mimeBits = explode('/', $this->mimetype);
-        $mimeClean = (count($mimeBits) > 1) ? ($mimeBits[0] . '/' . $mimeBits[1]) : ($this->mimetype);
-
-        // Markdown by extension
-        if (count($nameBits) > 1 && $nameBits[count($nameBits) - 1] === 'md') { // TODO
-            return 'markdown';
-        }
-
-        // Code by extension and mimetype
-        elseif ((count($nameBits) > 1 && in_array($nameBits[count($nameBits) - 1], $this->codeExtensions)) || in_array($mimeClean, $this->codeMimetypes)) {
-            return 'code';
-        }
-
-        // Minor types by mimetype
-        elseif ($mimeClean === 'application/pdf') {
-            return 'pdf';
-        }
-        elseif ($mimeClean === 'application/epub+zip') {
-            return 'epub';
-        }
-        elseif ($mimeClean === 'application/json') {
-            return 'json';
-        }
-
-        // Compressed files by mimetype
-        elseif (in_array($mimeClean, $this->packageMimetypes)) {
-            return 'package';
-        }
-
-        // Windows executables by mimetype
-        elseif ($mimeClean === 'application/x-msdownload' || $mimeClean === 'application/x-ms-dos-executable') {
-            return 'executable';
-        }
-
-        // Default from mimetype
-        elseif (!empty($mimeBits[0])) {
-            return $mimeBits[0];
-        }
-
-        // Default from extension
-        elseif (count($nameBits) > 1) {
-            return $nameBits[count($nameBits) - 1];
-        }
-
-        // Fallback
-        else {
-            return 'file';
+            return extensionToMimeType($this->extension);
         }
     }
 
@@ -204,5 +149,67 @@ class StackFile extends StackItem
     public function getSizeAttribute()
     {
         return Downloaders::getFileSize($this->download_remote);
+    }
+
+    /**
+     * @return string
+     */
+    public function getExtensionAttribute()
+    {
+        $nameBits = explode('.', $this->name);
+        return count($nameBits) > 1 ? $nameBits[count($nameBits) - 1] : '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeAttribute()
+    {
+        $mimeBits = explode('/', $this->mimetype);
+        $mimeClean = (count($mimeBits) > 1) ? ($mimeBits[0] . '/' . $mimeBits[1]) : ($this->mimetype);
+
+        // Markdown by extension
+        if ($this->extension === 'md') { // TODO
+            return 'markdown';
+        }
+
+        // Code by extension and mimetype
+        elseif (in_array($this->extension, $this->codeExtensions) || in_array($mimeClean, $this->codeMimetypes)) {
+            return 'code';
+        }
+
+        // Minor types by mimetype
+        elseif ($mimeClean === 'application/pdf') {
+            return 'pdf';
+        }
+        elseif ($mimeClean === 'application/epub+zip') {
+            return 'epub';
+        }
+        elseif ($mimeClean === 'application/json') {
+            return 'json';
+        }
+
+        // Compressed files by mimetype
+        elseif (in_array($mimeClean, $this->packageMimetypes)) {
+            return 'package';
+        }
+
+        // Windows executables by mimetype
+        elseif ($mimeClean === 'application/x-msdownload' || $mimeClean === 'application/x-ms-dos-executable') {
+            return 'executable';
+        }
+
+        // Default from mimetype
+        elseif (!empty($mimeBits[0])) {
+            return $mimeBits[0];
+        }
+        // Default from extension
+        elseif (!empty($this->extension)) {
+            return $this->extension;
+        }
+        // Fallback
+        else {
+            return 'file';
+        }
     }
 }

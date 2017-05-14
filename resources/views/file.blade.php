@@ -46,6 +46,8 @@
         <dd>{{ $item->name }}</dd>
         <dt>Mime Type</dt>
         <dd>{{ $item->mimetype }}</dd>
+        <dt>Detected Type</dt>
+        <dd>{{ $item->type }}</dd>
         @if (isset($item->size))
             <dt>File Size</dt>
             <dd>{{ humanFileSize($item->size) }}</dd>
