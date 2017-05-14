@@ -81,12 +81,6 @@ class BrowseController extends Controller
             return null;
         }
 
-        elseif (request()->has('thumbnail')) {
-            $stack = resolve('App\Stack\StackApi');
-            $stack->presentThumbnail($file);
-            return null;
-        }
-
         else {
             return view('file', [
                 'item' => $file,
