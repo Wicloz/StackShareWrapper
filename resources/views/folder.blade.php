@@ -8,7 +8,8 @@
             <thead>
                 <tr>
                     <th class="preview-column"></th>
-                    <th></th>
+                    <th>Name</th>
+                    <th>Size</th>
                     <th></th>
                 </tr>
             </thead>
@@ -21,6 +22,9 @@
                         </td>
                         <td>
                             <a class="item-name" href="{{ url($subFolder->path_slug) }}">{{ $subFolder->name }}</a>
+                        </td>
+                        <td>
+                            {{ humanFileSize($subFolder->size) }}
                         </td>
 
                         <td>
@@ -38,7 +42,10 @@
                             <img class="thumbnail preview-thumbnail" src="{{ $subFile->file_thumbnail }}" alt="">
                         </td>
                         <td>
-                            <a class="item-name" href="{{ url($subFile->path_slug) }}">{{ $subFile->name }}</a>
+                            <a class="item-name item-center-vertical" href="{{ url($subFile->path_slug) }}">{{ $subFile->name }}</a>
+                        </td>
+                        <td>
+                            <span class="item-center-vertical">{{ humanFileSize($subFile->size) }}</span>
                         </td>
 
                         <td>

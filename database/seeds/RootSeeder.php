@@ -14,6 +14,7 @@ class RootSeeder extends Seeder
     {
         StackFolder::firstOrCreate([
             'path' => '/',
+            'size' => 0,
             'parent_id' => null,
         ]);
     }

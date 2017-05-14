@@ -12,6 +12,7 @@ use App\Stack\StackApi;
  * @property string $path
  * @property string $path_slug
  * @property string $path_hash
+ * @property int $size
  * @property int $parent_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -28,6 +29,7 @@ use App\Stack\StackApi;
  * @method static \Illuminate\Database\Query\Builder|\App\StackFolder wherePath($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFolder wherePathHash($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFolder wherePathSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFolder whereSize($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFolder whereUpdatedAt($value)
  * @mixin \Eloquent
  */
@@ -38,7 +40,7 @@ class StackFolder extends StackItem
      *
      * @var array
      */
-    protected $fillable = ['name', 'path', 'parent'];
+    protected $fillable = ['name', 'path', 'size', 'parent'];
 
     /**
      * Get the parent folder for this folder.
@@ -84,7 +86,9 @@ class StackFolder extends StackItem
             if ($node->mimetype === 'httpd/unix-directory') {
                 $this->subFolders()->updateOrCreate([
                     'path' => $node->path,
-                ], []);
+                ], [
+                    'size' => $node->fileSize,
+                ]);
             }
 
             else {
@@ -92,6 +96,7 @@ class StackFolder extends StackItem
                     'path' => $node->path,
                 ], [
                     'mimetype_remote' => $node->mimetype,
+                    'size' => $node->fileSize,
                 ]);
             }
         }

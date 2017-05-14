@@ -6,8 +6,10 @@
 
   tr {
     height: 57px;
-    .item-name {
+    .item-center-vertical {
       line-height: 40px;
+    }
+    .item-name {
       overflow: hidden;
       text-overflow: ellipsis;
       word-break: break-all;

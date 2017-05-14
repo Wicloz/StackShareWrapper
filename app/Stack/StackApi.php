@@ -42,35 +42,6 @@ class StackApi
     }
 
     /**
-     * Gets the size of the requested stack file as defined in the 'content-length' header.
-     *
-     * @param $path
-     * @return string|null
-     */
-    public function getFileSize($path)
-    {
-        $url = cleanUrl("{$this->baseurl}/remote.php/webdav/{$this->sharefolder}/{$path}");
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_USERPWD, "{$this->username}:{$this->password}");
-        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_NOBODY, true);
-        curl_exec($ch);
-        $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
-        curl_close($ch);
-
-        if (is_numeric($size) && $size >= 0) {
-            return $size;
-        } else {
-            return null;
-        }
-    }
-
-    /**
      * Sets headers and presents a remote stack file.
      *
      * @param StackFile $file

@@ -11,6 +11,7 @@ use App\Stack\Downloaders;
  * @property string $path
  * @property string $path_slug
  * @property string $path_hash
+ * @property int $size
  * @property string $mimetype_remote
  * @property int $parent_id
  * @property \Carbon\Carbon $created_at
@@ -22,7 +23,6 @@ use App\Stack\Downloaders;
  * @property-read string $mimetype
  * @property-read string $name
  * @property-read string $path_clean
- * @property-read float|null $size
  * @property-read string $type
  * @property-read \App\StackFolder $parent
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereCreatedAt($value)
@@ -32,6 +32,7 @@ use App\Stack\Downloaders;
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile wherePath($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile wherePathHash($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile wherePathSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereSize($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFile whereUpdatedAt($value)
  * @mixin \Eloquent
  */
@@ -42,7 +43,7 @@ class StackFile extends StackItem
      *
      * @var array
      */
-    protected $fillable = ['name', 'path', 'parent', 'mimetype_remote'];
+    protected $fillable = ['name', 'path', 'size', 'mimetype_remote', 'parent'];
 
     /**
      * Extensions for files that can be previewed as code.
@@ -101,18 +102,6 @@ class StackFile extends StackItem
     /**
      * @return string
      */
-    public function getMimetypeAttribute()
-    {
-        if ($this->mimetype_remote !== 'application/octet-stream') {
-            return $this->mimetype_remote;
-        } else {
-            return extensionToMimeType($this->extension);
-        }
-    }
-
-    /**
-     * @return string
-     */
     public function getFileThumbnailAttribute()
     {
         switch ($this->type) {
@@ -142,12 +131,15 @@ class StackFile extends StackItem
     }
 
     /**
-     * @return float|null
+     * @return string
      */
-    public function getSizeAttribute()
+    public function getMimetypeAttribute()
     {
-        $stack = resolve('App\Stack\StackApi');
-        return intval(round($stack->getFileSize($this->path)));
+        if ($this->mimetype_remote !== 'application/octet-stream') {
+            return $this->mimetype_remote;
+        } else {
+            return extensionToMimeType($this->extension);
+        }
     }
 
     /**

@@ -20,6 +20,8 @@ class CreateStackFoldersTable extends Migration
             $table->string('path_slug', 4096)->unique();
             $table->string('path_hash')->unique();
 
+            $table->integer('size')->unsinged();
+
             $table->integer('parent_id')->unsinged()->nullable();
             $table->timestamps();
 

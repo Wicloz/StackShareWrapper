@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $path
  * @property string $path_slug
  * @property string $path_hash
+ * @property int $size
  * @property int $parent_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
