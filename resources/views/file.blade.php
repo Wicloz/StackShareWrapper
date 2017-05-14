@@ -26,6 +26,9 @@
     @elseif ($item->type === 'json')
         {{-- TODO --}}
 
+    @elseif ($item->type === 'xml')
+        {{-- TODO --}}
+
     @elseif ($item->type === 'package' || $item->type === 'executable')
         <p>No Preview Available</p>
 

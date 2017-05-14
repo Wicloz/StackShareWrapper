@@ -165,8 +165,8 @@ class StackFile extends StackItem
      */
     public function getTypeAttribute()
     {
-        $mimeBits = explode('/', $this->mimetype);
-        $mimeClean = (count($mimeBits) > 1) ? ($mimeBits[0] . '/' . $mimeBits[1]) : ($this->mimetype);
+        $mimeClean = explode(';', $this->mimetype)[0];
+        $mimeBits = explode('/', $mimeClean);
 
         // Markdown by extension
         if ($this->extension === 'md') { // TODO
@@ -188,6 +188,9 @@ class StackFile extends StackItem
         elseif ($mimeClean === 'application/json') {
             return 'json';
         }
+        elseif ($mimeClean === 'text/xml') {
+            return 'xml';
+        }
 
         // Compressed files by mimetype
         elseif (in_array($mimeClean, $this->packageMimetypes)) {
@@ -200,7 +203,7 @@ class StackFile extends StackItem
         }
 
         // Default from mimetype
-        elseif (!empty($mimeBits[0])) {
+        elseif (!empty($mimeBits[0]) && $mimeBits[0] !== 'application') {
             return $mimeBits[0];
         }
         // Default from extension
