@@ -57,4 +57,34 @@ class StackApi
         }
         readfile(cleanUrl($file->file_full));
     }
+
+    /**
+     * Uploads a file to stack.
+     *
+     * @param $remotePath
+     * @param $localPath
+     * @return mixed
+     */
+    public function uploadFile($remotePath, $localPath)
+    {
+        $file = fopen($localPath, "rb");
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, "{$this->baseurl}/remote.php/webdav/{$this->sharefolder}{$remotePath}");
+        curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+        curl_setopt($ch, CURLOPT_USERPWD, "{$this->username}:{$this->password}");
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+
+        curl_setopt($ch, CURLOPT_PUT, true);
+        curl_setopt($ch, CURLOPT_INFILE, $file);
+        curl_setopt($ch, CURLOPT_INFILESIZE, filesize($localPath));
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        return $response;
+    }
 }
