@@ -102,13 +102,21 @@ class StackFile extends StackItem
     /**
      * @return string
      */
+    public function getFileThumbnailRemoteAttribute()
+    {
+        $baseurl = config('stack.baseurl');
+        $shareid = config('stack.shareid');
+        return "{$baseurl}/public-share/{$shareid}/preview?path={$this->path}&mode=thumbnail";
+    }
+
+    /**
+     * @return string
+     */
     public function getFileThumbnailAttribute()
     {
         switch ($this->type) {
             case 'image':
-                $baseurl = config('stack.baseurl');
-                $shareid = config('stack.shareid');
-                return "{$baseurl}/public-share/{$shareid}/preview?path={$this->path}&mode=thumbnail";
+                return url("/file/{$this->path_hash}/?thumbnail=1");
 
             default:
                 if (file_exists(public_path("/media/thumbnails/{$this->type}.svg"))) {
@@ -123,11 +131,19 @@ class StackFile extends StackItem
     /**
      * @return string
      */
-    public function getFileFullAttribute()
+    public function getFileFullRemoteAttribute()
     {
         $baseurl = config('stack.baseurl');
         $shareid = config('stack.shareid');
         return "{$baseurl}/public-share/{$shareid}/preview?path={$this->path}&mode=full";
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileFullAttribute()
+    {
+        return url("/file/{$this->path_hash}/?full=1");
     }
 
     /**
