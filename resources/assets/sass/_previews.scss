@@ -3,6 +3,15 @@
   height: 32px;
 }
 
+.preview-description {
+  dt {
+    word-break: break-all;
+  }
+  dd {
+    word-break: break-all;
+  }
+}
+
 // Preview file types
 
 .preview-image {

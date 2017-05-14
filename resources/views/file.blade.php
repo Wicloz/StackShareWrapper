@@ -44,7 +44,7 @@
 @endsection
 
 @section('content-left')
-    <dl>
+    <dl class="preview-description">
         <dt>File Name</dt>
         <dd>{{ $item->name }}</dd>
         <dt>Mime Type</dt>
