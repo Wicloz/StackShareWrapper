@@ -14,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Blade::extend(function($value) {
+            return preg_replace('/\{\?(.+)\?\}/', '<?php ${1} ?>', $value);
+        });
     }
 
     /**
@@ -24,13 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        /**
-         * <code>
-         * {? $old_section = "whatever" ?}
-         * </code>
-         */
-        Blade::extend(function($value) {
-            return preg_replace('/\{\?(.+)\?\}/', '<?php ${1} ?>', $value);
-        });
+        //
     }
 }

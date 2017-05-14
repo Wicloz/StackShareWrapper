@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Stack\Downloaders;
+use App\Stack\StackApi;
 
 /**
  * App\StackFolder
@@ -76,7 +77,8 @@ class StackFolder extends StackItem
      */
     public function refresh()
     {
-        $json = Downloaders::downloadStackList($this->path);
+        $stack = resolve('App\Stack\StackApi');
+        $json = $stack->downloadStackList($this->path);
 
         foreach ($json->nodes as $node) {
             if ($node->mimetype === 'httpd/unix-directory') {

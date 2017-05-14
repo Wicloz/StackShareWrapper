@@ -148,7 +148,8 @@ class StackFile extends StackItem
      */
     public function getSizeAttribute()
     {
-        return Downloaders::getFileSize($this->download_remote);
+        return null; // TODO
+//        return Downloaders::getFileSize($this->download_remote);
     }
 
     /**
