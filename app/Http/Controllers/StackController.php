@@ -67,6 +67,7 @@ class StackController extends Controller
             $parentFolder->subFiles()->save($file);
             return response()->json([
                 'success' => true,
+                'response' => trim($response),
                 'shareUrl' => url("/file/{$file->path_hash}?full=1"),
                 'thumbnailUrl' => $file->file_thumbnail,
             ]);
