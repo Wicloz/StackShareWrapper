@@ -53,11 +53,14 @@ function extensionToMimeType($extension)
  * @param bool $spacesToPlus
  * @return mixed
  */
-function cleanUrl($url, $spacesToPlus = true)
+function cleanUrl($url, $spacesToPlus = false)
 {
     if ($spacesToPlus) {
         $url = str_replace(' ', '+', $url);
+    } else {
+        $url = str_replace(' ', '%20', $url);
     }
+
     return preg_replace_callback('/([^a-zA-Z0-9\\%\\=\\:\\+\\&\\?\\-\\_\\/\\\\])/u', function ($matches) {
         return urlencode($matches[1]);
     }, $url);
