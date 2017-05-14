@@ -47,7 +47,8 @@ class StackApi
      * @param StackFile $file
      * @param bool $dl
      */
-    public function presentFile(StackFile $file, $dl = false) {
+    public function presentFile(StackFile $file, $dl = false)
+    {
         header("accept-ranges: bytes");
         header("content-disposition: " . ($dl ? 'attachment; ' : '') . "filename=\"{$file->name}\"");
         header("content-type: {$file->mimetype}");
