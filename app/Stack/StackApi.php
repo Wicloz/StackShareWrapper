@@ -67,6 +67,7 @@ class StackApi
      */
     public function uploadFile($remotePath, $localPath)
     {
+        $remotePath = cleanUrl($remotePath);
         $file = fopen($localPath, "rb");
         $ch = curl_init();
 
