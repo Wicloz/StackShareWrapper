@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\AuthToken;
 use App\StackFile;
 use App\StackFolder;
+use Illuminate\Support\Facades\Hash;
 
 class StackController extends Controller
 {
@@ -18,7 +20,23 @@ class StackController extends Controller
         $this->validate(request(), [
             'folder' => 'required|string',
             'file' => 'required|file',
+            'token' => 'required|string',
         ]);
+
+        // Authorize given token
+        $authorized = false;
+        foreach (AuthToken::all() as $authToken) {
+            if (Hash::check(request()->token, $authToken->token)) {
+                $authorized = true;
+                break;
+            }
+        }
+        if (!$authorized) {
+            return response()->json([
+                'success' => false,
+                'response' => 'Unauthorized token',
+            ], 403);
+        }
 
         // Create full path and get parent folder
         $path = request()->folder;
@@ -41,13 +59,11 @@ class StackController extends Controller
         }
 
         // Create new StackFile
-        else {
-            $file = new StackFile([
-                'path' => $path,
-                'size' => request()->file->getClientSize(),
-                'mimetype_remote' => request()->file->getClientMimeType(),
-            ]);
-        }
+        $file = new StackFile([
+            'path' => $path,
+            'size' => request()->file->getClientSize(),
+            'mimetype_remote' => request()->file->getClientMimeType(),
+        ]);
 
         // Upload file to stack
         $stack = resolve('App\Stack\StackApi');
@@ -66,14 +82,12 @@ class StackController extends Controller
         }
 
         // Send successful JSON response and save StackFile
-        else {
-            $parentFolder->subFiles()->save($file);
-            return response()->json([
-                'success' => true,
-                'response' => trim($response),
-                'shareUrl' => url("/file/{$file->path_hash}?full=1"),
-                'thumbnailUrl' => $file->file_thumbnail,
-            ]);
-        }
+        $parentFolder->subFiles()->save($file);
+        return response()->json([
+            'success' => true,
+            'response' => trim($response),
+            'shareUrl' => url("/file/{$file->path_hash}?full=1"),
+            'thumbnailUrl' => $file->file_thumbnail,
+        ]);
     }
 }
