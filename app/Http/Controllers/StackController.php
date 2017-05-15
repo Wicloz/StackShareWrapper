@@ -22,6 +22,12 @@ class StackController extends Controller
         ]);
 
         // Authorize given token
+        if (request()->token !== config('auth.tokens.upload')) {
+            return response()->json([
+                'success' => false,
+                'response' => 'Unauthorized token',
+            ], 403);
+        }
 
         // Create full path and get parent folder
         $path = request()->folder;
