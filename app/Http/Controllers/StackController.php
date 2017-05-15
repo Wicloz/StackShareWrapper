@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\StackFile;
 use App\StackFolder;
-use Illuminate\Http\UploadedFile;
 
 class StackController extends Controller
 {
@@ -38,7 +37,7 @@ class StackController extends Controller
             return response()->json([
                 'success' => false,
                 'response' => 'File already exists',
-            ]);
+            ], 409);
         }
 
         // Create new StackFile
@@ -56,13 +55,17 @@ class StackController extends Controller
 
         // Send failed JSON response
         if ($response !== 'Created') {
+            $status = 520;
+            if (!empty(intval($response))) {
+                $status = intval($response);
+            }
             return response()->json([
                 'success' => false,
                 'response' => trim($response),
-            ]);
+            ], $status);
         }
 
-        // Send successfull JSON response and save StackFile
+        // Send successful JSON response and save StackFile
         else {
             $parentFolder->subFiles()->save($file);
             return response()->json([
