@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read array $breadcrumbs
  * @property-read string $name
  * @property-read string $path_clean
+ * @property-read string $extension
  * @mixin \Eloquent
  */
 class StackItem extends Model
@@ -59,6 +60,15 @@ class StackItem extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getExtensionAttribute()
+    {
+        $nameBits = explode('.', $this->name);
+        return count($nameBits) > 1 ? $nameBits[count($nameBits) - 1] : '';
+    }
+
+    /**
      * @param $value
      * @throws \Exception
      */
@@ -66,7 +76,7 @@ class StackItem extends Model
     {
         if (empty($this->attributes['path'])) {
             $this->attributes['path'] = $value;
-            $this->attributes['path_hash'] = hashify($value);
+            $this->attributes['path_hash'] = hashify($value) . (Static::class == StackFile::class ? '.' . mb_strtolower($this->extension) : '');
 
             $this->attributes['path_slug'] = implode('/', collect(explode('/', $value))->map(function ($item) {
                 return slugify($item);

@@ -17,7 +17,6 @@ use App\Stack\Downloaders;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read array $breadcrumbs
- * @property-read string $extension
  * @property-read string $file_full
  * @property-read string $file_thumbnail
  * @property-read string $mimetype
@@ -140,15 +139,6 @@ class StackFile extends StackItem
         } else {
             return extensionToMimeType($this->extension);
         }
-    }
-
-    /**
-     * @return string
-     */
-    public function getExtensionAttribute()
-    {
-        $nameBits = explode('.', $this->name);
-        return count($nameBits) > 1 ? $nameBits[count($nameBits) - 1] : '';
     }
 
     /**
