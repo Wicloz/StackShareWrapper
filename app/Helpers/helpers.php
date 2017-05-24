@@ -19,7 +19,7 @@ function htmlentities_decode($string)
  */
 function slugify($string)
 {
-    $slugify = new \Cocur\Slugify\Slugify();
+    $slugify = new \Cocur\Slugify\Slugify(['regexp' => '/([^A-Za-z0-9\-\.])+/']);
     return $slugify->slugify($string);
 }
 
@@ -57,7 +57,8 @@ function cleanUrl($url, $spacesToPlus = false)
 {
     if ($spacesToPlus) {
         $url = str_replace(' ', '+', $url);
-    } else {
+    }
+    else {
         $url = str_replace(' ', '%20', $url);
     }
 
@@ -81,4 +82,30 @@ function humanFileSize($size, $decimals = 2, $unit = '')
     if ((empty($unit) && $size >= 1 << 10) || $unit == 'KB')
         return number_format($size / (1 << 10), $decimals) . 'KB';
     return number_format($size) . ' bytes';
+}
+
+/**
+ * @param \Illuminate\Http\Request $request
+ * @return string
+ */
+function encodeRequestToGet(\Illuminate\Http\Request $request)
+{
+    $get = '';
+
+    if (count($request->all()) > 0) {
+        $collection = collect($request->all());
+
+        $collection->transform(function ($item, $key) {
+            return [$key, $item];
+        });
+
+        $collection = $collection->values();
+
+        $get .= $collection->reduce(function ($carry, $item) {
+            $sep = ($carry == null ? '?' : '&');
+            return "{$carry}{$sep}{$item[0]}={$item[1]}";
+        });
+    }
+
+    return $get;
 }

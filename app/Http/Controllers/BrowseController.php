@@ -31,25 +31,25 @@ class BrowseController extends Controller
     }
 
     /**
-     * Show the requested folder for a hash.
+     * Redirect to the requested folder for a hash.
      *
      * @param string $hash
      * @return \Illuminate\Http\Response
      */
     public function folderHash($hash)
     {
-        return $this->folder(StackFolder::where('path_hash', $hash)->firstOrFail());
+        return redirect(url(StackFolder::where('path_hash', $hash)->firstOrFail()->path_slug . encodeRequestToGet(request())), 302, request()->headers->all());
     }
 
     /**
-     * Show the requested file for a hash.
+     * Redirect to the requested file for a hash.
      *
      * @param string $hash
      * @return \Illuminate\Http\Response
      */
     public function fileHash($hash)
     {
-        return $this->file(StackFile::where('path_hash', $hash)->firstOrFail());
+        return redirect(url(StackFile::where('path_hash', $hash)->firstOrFail()->path_slug . encodeRequestToGet(request())), 302, request()->headers->all());
     }
 
     /**
