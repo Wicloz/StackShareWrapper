@@ -76,11 +76,12 @@ class StackItem extends Model
     {
         if (empty($this->attributes['path'])) {
             $this->attributes['path'] = $value;
-            $this->attributes['path_hash'] = hashify($value) . (Static::class == StackFile::class ? '.' . mb_strtolower($this->extension) : '');
 
             $this->attributes['path_slug'] = implode('/', collect(explode('/', $value))->map(function ($item) {
                 return slugify($item);
             })->all());
+
+            $this->attributes['path_hash'] = hashify($this->attributes['path_slug']) . (Static::class == StackFile::class ? '.' . mb_strtolower($this->extension) : '');
         }
 
         else {
