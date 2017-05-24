@@ -86,8 +86,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ mix('/js/manifest.js') }}"></script>
-    <script src="{{ mix('/js/vendor.js') }}"></script>
+    <script src="{{ mix('/js/bootstrap.js') }}"></script>
     <script src="/js/ie10-viewport-bug-workaround.js"></script>
     <script src="{{ mix('/js/app.js') }}"></script>
 

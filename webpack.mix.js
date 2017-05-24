@@ -12,18 +12,11 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js').extract([
-     'vue',
-     'jquery',
-     'axios',
-     'lodash',
-     'bootstrap-sass',
-   ])
+mix.js('resources/assets/js/bootstrap.js', 'public/js')
+   .js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .sass('resources/assets/sass/bootstrap.scss', 'public/css')
-   .copyDirectory('resources/assets/files/js', 'public/js')
-   .copyDirectory('resources/assets/files/css', 'public/css')
-   .copyDirectory('resources/assets/files/media', 'public/media');
+   .copyDirectory('resources/assets/files', 'public');
 
 if (mix.config.inProduction) {
   mix.version().disableNotifications();
