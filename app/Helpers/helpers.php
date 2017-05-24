@@ -19,7 +19,7 @@ function htmlentities_decode($string)
  */
 function slugify($string)
 {
-    $slugify = new \Cocur\Slugify\Slugify(['regexp' => '/([^A-Za-z0-9\-\.])+/']);
+    $slugify = new \Cocur\Slugify\Slugify(['regexp' => '/([^A-Za-z0-9\\-\\.])+/']);
     return $slugify->slugify($string);
 }
 
@@ -62,7 +62,7 @@ function cleanUrl($url, $spacesToPlus = false)
         $url = str_replace(' ', '%20', $url);
     }
 
-    return preg_replace_callback('/([^a-zA-Z0-9\\%\\=\\:\\+\\&\\?\\-\\_\\/\\\\])/u', function ($matches) {
+    return preg_replace_callback('/([^a-zA-Z0-9\\%\\=\\:\\+\\&\\?\\-\\_\\.\\,\\;\\/\\\\])/u', function ($matches) {
         return urlencode($matches[1]);
     }, $url);
 }
