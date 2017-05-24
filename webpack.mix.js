@@ -19,9 +19,9 @@ mix.js('resources/assets/js/bootstrap.js', 'public/js')
    .copyDirectory('resources/assets/files', 'public');
 
 if (mix.config.inProduction) {
-  mix.version().disableNotifications();
+    mix.version().disableNotifications();
 }
 
 else {
-  mix.sourceMaps().browserSync(process.env.APP_URL);
+    mix.sourceMaps().browserSync(process.env.APP_URL);
 }
