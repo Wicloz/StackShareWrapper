@@ -84,7 +84,7 @@ class StackItem extends Model
      */
     public function getUrlHashAttribute()
     {
-        return url($this->path_hash);
+        return url((Static::class == StackFolder::class ? '/folder/' : '/file/') . $this->path_hash);
     }
 
     /**
