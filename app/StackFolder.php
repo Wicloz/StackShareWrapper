@@ -32,6 +32,10 @@ use App\Stack\StackApi;
  * @method static \Illuminate\Database\Query\Builder|\App\StackFolder whereSize($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFolder whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read string $extension
+ * @property-read string $human_size
+ * @property-read string $url_hash
+ * @property-read string $url_slug
  */
 class StackFolder extends StackItem
 {
@@ -41,6 +45,13 @@ class StackFolder extends StackItem
      * @var array
      */
     protected $fillable = ['path', 'size', 'parent'];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['breadcrumbs', 'file_thumbnail', 'name', 'path_clean', 'url_slug', 'url_hash', 'human_size'];
 
     /**
      * Get the parent folder for this folder.

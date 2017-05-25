@@ -20,6 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read string $path_clean
  * @property-read string $extension
  * @mixin \Eloquent
+ * @property-read string $human_size
+ * @property-read string $url_hash
+ * @property-read string $url_slug
  */
 class StackItem extends Model
 {
@@ -66,6 +69,30 @@ class StackItem extends Model
     {
         $nameBits = explode('.', $this->name);
         return count($nameBits) > 1 ? $nameBits[count($nameBits) - 1] : '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlSlugAttribute()
+    {
+        return url($this->path_slug);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlHashAttribute()
+    {
+        return url($this->path_hash);
+    }
+
+    /**
+     * @return string
+     */
+    public function getHumanSizeAttribute()
+    {
+        return humanFileSize($this->size);
     }
 
     /**
