@@ -26,7 +26,7 @@
             return {
                 folders: [],
                 files: [],
-            }
+            };
         },
 
         created() {
