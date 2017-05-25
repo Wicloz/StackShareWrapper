@@ -5,9 +5,7 @@
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('stack-item-list', require('./components/ItemList.vue'));
-Vue.component('stack-file-item', require('./components/FileItem.vue'));
-Vue.component('stack-folder-item', require('./components/FolderItem.vue'));
+Vue.component('example', require('./components/Example.vue'));
 
 const app = new Vue({
     el: '#app'
