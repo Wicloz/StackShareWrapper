@@ -51,7 +51,7 @@ class StackFolder extends StackItem
      *
      * @var array
      */
-    protected $appends = ['breadcrumbs', 'file_thumbnail', 'name', 'path_clean', 'url_slug', 'url_hash', 'human_size'];
+    protected $appends = ['breadcrumbs', 'file_thumbnail', 'name', 'path_clean', 'url_slug', 'url_hash', 'human_size', 'extension'];
 
     /**
      * Get the parent folder for this folder.

@@ -46,7 +46,7 @@ class StackFile extends StackItem
      *
      * @var array
      */
-    protected $fillable = ['path', 'size', 'mimetype_remote', 'parent'];
+    protected $fillable = ['path', 'size', 'mimetype_remote', 'parent', 'extension'];
 
     /**
      * The accessors to append to the model's array form.
