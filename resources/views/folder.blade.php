@@ -21,17 +21,15 @@
                             <img class="thumbnail preview-thumbnail" src="{{ $subFolder->file_thumbnail }}" alt="">
                         </td>
                         <td>
-                            <a class="item-name item-center-vertical" href="{{ url($subFolder->path_slug) }}">{{ $subFolder->name }}</a>
+                            <a class="item-name item-center-vertical" href="{{ $subFolder->url_hash }}">{{ $subFolder->name }}</a>
                         </td>
                         <td>
-                            <span class="item-center-vertical">{{ humanFileSize($subFolder->size) }}</span>
+                            <span class="item-center-vertical">{{ $subFolder->human_size }}</span>
                         </td>
 
                         <td>
                             <img class="share-icon pull-right invisible" src="{{ url('/media/icons/download.svg') }}" alt="">
-                            <a href="{{ url("/folder/{$subFolder->path_hash}") }}" title="Permalink">
-                                <img class="share-icon pull-right" src="{{ url('/media/icons/link.svg') }}" alt="link">
-                            </a>
+                            <img class="share-icon pull-right invisible" src="{{ url('/media/icons/link.svg') }}" alt="">
                         </td>
                     </tr>
                 @endforeach
@@ -42,17 +40,17 @@
                             <img class="thumbnail preview-thumbnail" src="{{ $subFile->file_thumbnail }}" alt="">
                         </td>
                         <td>
-                            <a class="item-name item-center-vertical" href="{{ url($subFile->path_slug) }}">{{ $subFile->name }}</a>
+                            <a class="item-name item-center-vertical" href="{{ $subFile->url_hash }}">{{ $subFile->name }}</a>
                         </td>
                         <td>
-                            <span class="item-center-vertical">{{ humanFileSize($subFile->size) }}</span>
+                            <span class="item-center-vertical">{{ $subFile->human_size }}</span>
                         </td>
 
                         <td>
-                            <a href="{{ url("/file/{$subFile->path_hash}?dl=1") }}" title="Download">
+                            <a href="{{ "{$subFile->url_hash}?dl=1" }}" title="Download">
                                 <img class="share-icon pull-right" src="{{ url('/media/icons/download.svg') }}" alt="download">
                             </a>
-                            <a href="{{ url("/file/{$subFile->path_hash}?full=1") }}" title="Share">
+                            <a href="{{ "{$subFile->url_hash}?full=1" }}" title="Share">
                                 <img class="share-icon pull-right" src="{{ url('/media/icons/link.svg') }}" alt="link">
                             </a>
                         </td>

@@ -53,7 +53,7 @@
         <dd>{{ $item->type }}</dd>
         @if (isset($item->size))
             <dt>File Size</dt>
-            <dd>{{ humanFileSize($item->size) }}</dd>
+            <dd>{{ $item->human_size }}</dd>
         @endif
     </dl>
 @endsection
@@ -63,17 +63,17 @@
         <tbody>
             <tr>
                 <td>
-                    <a href="{{ url("/file/{$item->path_hash}") }}" title="Permalink">
+                    <a href="{{ $item->url_hash }}" title="Link">
                         <img class="share-icon center-block" src="{{ url('/media/icons/link.svg') }}" alt="link">
                     </a>
                 </td>
                 <td>
-                    <a href="{{ url("/file/{$item->path_hash}?full=1") }}" title="Share">
+                    <a href="{{ "{$item->url_hash}?dl=1" }}" title="Share">
                         <img class="share-icon center-block" src="{{ url('/media/icons/link.svg') }}" alt="link">
                     </a>
                 </td>
                 <td>
-                    <a href="{{ url("/file/{$item->path_hash}?dl=1") }}" title="Download">
+                    <a href="{{ "{$item->url_hash}?full=1" }}" title="Download">
                         <img class="share-icon center-block" src="{{ url('/media/icons/download.svg') }}" alt="download">
                     </a>
                 </td>
