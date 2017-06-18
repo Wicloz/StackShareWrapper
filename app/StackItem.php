@@ -10,7 +10,6 @@ use Illuminate\Support\Collection;
  *
  * @property int $id
  * @property string $path
- * @property string $path_slug
  * @property string $path_hash
  * @property int $size
  * @property int $parent_id
@@ -23,7 +22,6 @@ use Illuminate\Support\Collection;
  * @mixin \Eloquent
  * @property-read string $human_size
  * @property-read string $url_hash
- * @property-read string $url_slug
  * @property-read \App\StackFolder $parent
  */
 class StackItem extends Model
@@ -81,14 +79,6 @@ class StackItem extends Model
     /**
      * @return string
      */
-    public function getUrlSlugAttribute()
-    {
-        return url($this->path_slug);
-    }
-
-    /**
-     * @return string
-     */
     public function getUrlHashAttribute()
     {
         return url((Static::class == StackFolder::class ? '/folder/' : '/file/') . $this->path_hash);
@@ -111,11 +101,10 @@ class StackItem extends Model
         if (empty($this->attributes['path'])) {
             $this->attributes['path'] = $value;
 
-            $this->attributes['path_slug'] = implode('/', collect(explode('/', $value))->map(function ($item) {
+            $slugPath = implode('/', collect(explode('/', $value))->map(function ($item) {
                 return slugify($item);
             })->all());
-
-            $this->attributes['path_hash'] = hashify($this->attributes['path_slug']) . (Static::class == StackFile::class ? '.' . mb_strtolower($this->extension) : '');
+            $this->attributes['path_hash'] = hashify($slugPath) . (Static::class == StackFile::class ? '.' . mb_strtolower($this->extension) : '');
         }
 
         else {

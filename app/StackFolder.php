@@ -10,7 +10,6 @@ use App\Stack\StackApi;
  *
  * @property int $id
  * @property string $path
- * @property string $path_slug
  * @property string $path_hash
  * @property int $size
  * @property int $parent_id
@@ -35,7 +34,6 @@ use App\Stack\StackApi;
  * @property-read string $extension
  * @property-read string $human_size
  * @property-read string $url_hash
- * @property-read string $url_slug
  */
 class StackFolder extends StackItem
 {

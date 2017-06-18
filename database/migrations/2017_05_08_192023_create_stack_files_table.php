@@ -17,7 +17,6 @@ class CreateStackFilesTable extends Migration
             $table->increments('id');
 
             $table->string('path', 4096)->unique();
-            $table->string('path_slug', 4096)->unique();
             $table->string('path_hash')->unique();
 
             $table->bigInteger('size')->unsinged();

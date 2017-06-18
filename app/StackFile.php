@@ -9,7 +9,6 @@ use App\Stack\Downloaders;
  *
  * @property int $id
  * @property string $path
- * @property string $path_slug
  * @property string $path_hash
  * @property int $size
  * @property string $mimetype_remote
@@ -37,7 +36,6 @@ use App\Stack\Downloaders;
  * @property-read string $extension
  * @property-read string $human_size
  * @property-read string $url_hash
- * @property-read string $url_slug
  */
 class StackFile extends StackItem
 {

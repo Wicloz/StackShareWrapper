@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/folder/{hash}', 'BrowseController@folderHash');
-Route::get('/file/{hash}', 'BrowseController@fileHash');
-Route::get('/{path?}', 'BrowseController@request')->where('path', '(.*)');
+Route::get('/', 'BrowseController@root');
+Route::get('/folder/{hash}', 'BrowseController@folder');
+Route::get('/file/{hash}', 'BrowseController@file');

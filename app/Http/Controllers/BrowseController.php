@@ -8,58 +8,25 @@ use App\StackFolder;
 class BrowseController extends Controller
 {
     /**
-     * Handle the users request for a path.
+     * Show the root folder.
      *
-     * @param string $path
      * @return \Illuminate\Http\Response
      */
-    public function request($path = '')
+    public function root()
     {
-        $path = '/' . $path;
-
-        // Try to grab as file
-        $file = StackFile::where('path_slug', $path)->first();
-        if (isset($file)) {
-            return $this->file($file);
-        }
-
-        // Try to grab as folder
-        else {
-            $folder = StackFolder::where('path_slug', $path)->firstOrFail();
-            return $this->folder($folder);
-        }
-    }
-
-    /**
-     * Redirect to the requested folder for a hash.
-     *
-     * @param string $hash
-     * @return \Illuminate\Http\Response
-     */
-    public function folderHash($hash)
-    {
-        return redirect(url(StackFolder::where('path_hash', $hash)->firstOrFail()->path_slug . encodeRequestToGet(request())), 302, request()->headers->all());
-    }
-
-    /**
-     * Redirect to the requested file for a hash.
-     *
-     * @param string $hash
-     * @return \Illuminate\Http\Response
-     */
-    public function fileHash($hash)
-    {
-        return redirect(url(StackFile::where('path_hash', $hash)->firstOrFail()->path_slug . encodeRequestToGet(request())), 302, request()->headers->all());
+        $folder = StackFolder::whereNull('parent_id')->firstOrFail();
+        return redirect($folder->url_hash);
     }
 
     /**
      * Show the requested folder.
      *
-     * @param StackFolder $folder
+     * @param string $hash
      * @return \Illuminate\Http\Response
      */
-    public function folder(StackFolder $folder)
+    public function folder($hash)
     {
+        $folder = StackFolder::where('path_hash', $hash)->firstOrFail();
         $folder->refresh();
 
         return view('folder', [
@@ -70,11 +37,13 @@ class BrowseController extends Controller
     /**
      * Show the requested file.
      *
-     * @param StackFile $file
+     * @param string $hash
      * @return \Illuminate\Http\Response
      */
-    public function file(StackFile $file)
+    public function file($hash)
     {
+        $file = StackFile::where('path_hash', $hash)->firstOrFail();
+
         if (request()->has('full') || request()->has('dl')) {
             $stack = resolve('App\Stack\StackApi');
             $stack->presentFile($file, request()->has('dl'));
