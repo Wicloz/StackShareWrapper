@@ -51,18 +51,18 @@ class StackApi
      */
     public function presentFile(StackFile $file, $dl = false)
     {
-        readfile(cleanUrl($file->file_full));
-
-        $headers = [
-            "accept-ranges" => "bytes",
-            "content-disposition" => ($dl ? 'attachment; ' : '') . "filename=\"{$file->name}\"",
-            "content-type" => $file->mimetype,
-        ];
+        header("accept-ranges: bytes");
+        header("content-disposition: " . ($dl ? 'attachment; ' : '') . "filename=\"{$file->name}\"");
+        header("content-type: {$file->mimetype}");
         if (isset($file->size)) {
-            $headers["content-length"] = $file->size;
+            header("content-length: {$file->size}");
         }
 
-        return new Response("", 200, $headers);
+        readfile(cleanUrl($file->file_full));
+
+        return new Response("", 200, collect(headers_list())->mapWithKeys(function ($item) {
+            return [explode(': ', $item)[0] => explode(': ', $item)[1]];
+        })->all());
     }
 
     /**
