@@ -20,9 +20,15 @@ class AppServiceProvider extends ServiceProvider
             return preg_replace('/\{\?(.+)\?\}/', '<?php ${1} ?>', $value);
         });
 
-        Response::macro('stackFile', function (StackFile $file, $dl = false) {
+        Response::macro('stackView', function (StackFile $file) {
             $stack = resolve('App\Stack\StackApi');
-            $stack->presentFile($file, $dl);
+            $stack->presentFile($file, false);
+            return null;
+        });
+
+        Response::macro('stackDownload', function (StackFile $file) {
+            $stack = resolve('App\Stack\StackApi');
+            $stack->presentFile($file, true);
             return null;
         });
     }
