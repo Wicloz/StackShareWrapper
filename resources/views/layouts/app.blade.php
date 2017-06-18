@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
 
-<head>
+<head prefix="mime_types: https://www.iana.org/assignments/media-types/">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,10 +10,13 @@
     <title>{{ config('app.name') }} - @yield('title', '')</title>
     <meta name="description" content="@yield('description', '')">
     <meta name="author" content="Wilco de Boer | Wicloz">
-    <!-- og Information -->
-    <meta property="og:site_name" content="{{ config('app.name') }}">
+    <!-- Open Graph Information -->
     <meta property="og:title" content="{{ config('app.name') }} - @yield('title', '')">
+    <meta property="og:type" content="@yield('type', 'website')">
+    <meta property="og:image" content="@yield('icon', url('/favicon.ico'))">
+    <meta property="og:url" content="@yield('canonical', request()->fullUrl())">
     <meta property="og:description" content="@yield('description', '')">
+    <meta property="og:site_name" content="{{ config('app.name') }}">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">

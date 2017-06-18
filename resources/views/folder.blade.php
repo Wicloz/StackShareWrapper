@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('title', $item->path)
+@section('type', 'mime_types:httpd/unix-directory')
+@section('icon', $item->file_thumbnail)
 @section('description', "Browse " . $item->name . " at " . config('app.name') . ".")
 
 @section('content-center')

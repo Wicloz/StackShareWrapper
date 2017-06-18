@@ -1,8 +1,15 @@
 @extends('layouts.app')
 @section('title', $item->path)
+@section('type', 'mime_types:' . $item->mimeclean)
+@section('icon', $item->file_thumbnail)
 @section('description', "View " . $item->name . " at " . config('app.name') . ".")
+
 @section('head')
-    <meta property="og:image" content="{{ $item->file_thumbnail }}">
+    @if ($item->type === 'audio')
+        <meta property="og:audio" content="{{ $item->file_full }}">
+    @elseif ($item->type === 'video')
+        <meta property="og:video" content="{{ $item->file_full }}">
+    @endif
 @endsection
 
 @section('content-center')
