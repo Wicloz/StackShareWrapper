@@ -47,13 +47,6 @@ class StackFolder extends StackItem
     protected $fillable = ['path', 'size', 'parent'];
 
     /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = ['breadcrumbs', 'file_thumbnail', 'name', 'path_clean', 'url_slug', 'url_hash', 'human_size', 'extension'];
-
-    /**
      * Get the parent folder for this folder.
      */
     public function parent()
