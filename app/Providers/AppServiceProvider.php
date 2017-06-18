@@ -22,14 +22,12 @@ class AppServiceProvider extends ServiceProvider
 
         Response::macro('stackView', function (StackFile $file) {
             $stack = resolve('App\Stack\StackApi');
-            $stack->presentFile($file, false);
-            return null;
+            return $stack->presentFile($file, false);
         });
 
         Response::macro('stackDownload', function (StackFile $file) {
             $stack = resolve('App\Stack\StackApi');
-            $stack->presentFile($file, true);
-            return null;
+            return $stack->presentFile($file, true);
         });
     }
 

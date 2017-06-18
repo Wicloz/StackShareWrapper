@@ -3,6 +3,7 @@
 namespace App\Stack;
 
 use App\StackFile;
+use Illuminate\Http\Response;
 
 class StackApi
 {
@@ -46,16 +47,22 @@ class StackApi
      *
      * @param StackFile $file
      * @param bool $dl
+     * @return \Illuminate\Http\Response
      */
     public function presentFile(StackFile $file, $dl = false)
     {
-        header("accept-ranges: bytes");
-        header("content-disposition: " . ($dl ? 'attachment; ' : '') . "filename=\"{$file->name}\"");
-        header("content-type: {$file->mimetype}");
-        if (isset($file->size)) {
-            header("content-length: {$file->size}");
-        }
         readfile(cleanUrl($file->file_full));
+
+        $headers = [
+            "accept-ranges" => "bytes",
+            "content-disposition" => ($dl ? 'attachment; ' : '') . "filename=\"{$file->name}\"",
+            "content-type" => $file->mimetype,
+        ];
+        if (isset($file->size)) {
+            $headers["content-length"] = $file->size;
+        }
+
+        return new Response("", 200, $headers);
     }
 
     /**
