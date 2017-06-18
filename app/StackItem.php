@@ -47,7 +47,12 @@ class StackItem extends Model
     public function getNameAttribute()
     {
         $names = explode('/', $this->path);
-        return $names[count($names) - 1];
+        $name = $names[count($names) - 1];
+        if (!empty($name)) {
+            return $name;
+        } else {
+            return '/';
+        }
     }
 
     /**
