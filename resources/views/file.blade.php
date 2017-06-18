@@ -68,12 +68,12 @@
                     </a>
                 </td>
                 <td>
-                    <a href="{{ "{$item->url_hash}?dl=1" }}" title="Share">
+                    <a href="{{ "{$item->url_hash}?full=1" }}" title="Share">
                         <img class="share-icon center-block" src="{{ url('/media/icons/link.svg') }}" alt="link">
                     </a>
                 </td>
                 <td>
-                    <a href="{{ "{$item->url_hash}?full=1" }}" title="Download">
+                    <a href="{{ "{$item->url_hash}?dl=1" }}" title="Download">
                         <img class="share-icon center-block" src="{{ url('/media/icons/download.svg') }}" alt="download">
                     </a>
                 </td>
