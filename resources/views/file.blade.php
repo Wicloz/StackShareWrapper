@@ -64,7 +64,7 @@
             <tr>
                 <td>
                     <a href="{{ $item->url_hash }}" title="Link">
-                        <img class="share-icon center-block" src="{{ url('/media/icons/link.svg') }}" alt="link">
+                        <img class="share-icon center-block" src="{{ url('/media/icons/copy.svg') }}" alt="link">
                     </a>
                 </td>
                 <td>
