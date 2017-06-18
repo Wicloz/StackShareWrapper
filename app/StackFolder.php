@@ -98,4 +98,21 @@ class StackFolder extends StackItem
         $this->subFolders()->whereNotIn('path', collect($json->nodes)->pluck('path'))->delete();
         $this->subFiles()->whereNotIn('path', collect($json->nodes)->pluck('path'))->delete();
     }
+
+    /**
+     * Refresh all the data for this folder and all sub folders from stack, untill a file or folder with the given hash is found.
+     * @param $hash
+     */
+    public function refreshRecursiveUntilHashFound($hash)
+    {
+        $this->refresh();
+
+        if (StackFolder::where('path_hash', $hash)->first() !== null || StackFile::where('path_hash', $hash)->first() !== null ) {
+            return;
+        }
+
+        foreach ($this->subFolders as $subFolder) {
+            $subFolder->refreshRecursiveUntilHashFound($hash);
+        }
+    }
 }

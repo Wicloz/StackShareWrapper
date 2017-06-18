@@ -14,8 +14,8 @@ class BrowseController extends Controller
      */
     public function root()
     {
-        $folder = StackFolder::whereNull('parent_id')->firstOrFail();
-        return redirect($folder->url_hash);
+        $root = StackFolder::whereNull('parent_id')->firstOrFail();
+        return redirect($root->url_hash);
     }
 
     /**
@@ -26,7 +26,13 @@ class BrowseController extends Controller
      */
     public function folder($hash)
     {
-        $folder = StackFolder::where('path_hash', $hash)->firstOrFail();
+        $folder = StackFolder::where('path_hash', $hash)->first();
+        if (!isset($folder)) {
+            $root = StackFolder::whereNull('parent_id')->firstOrFail();
+            $root->refreshRecursiveUntilHashFound($hash);
+            $folder = StackFolder::where('path_hash', $hash)->firstOrFail();
+        }
+
         $folder->refresh();
 
         return view('folder', [
@@ -42,7 +48,12 @@ class BrowseController extends Controller
      */
     public function file($hash)
     {
-        $file = StackFile::where('path_hash', $hash)->firstOrFail();
+        $file = StackFile::where('path_hash', $hash)->first();
+        if (!isset($file)) {
+            $root = StackFolder::whereNull('parent_id')->firstOrFail();
+            $root->refreshRecursiveUntilHashFound($hash);
+            $file = StackFile::where('path_hash', $hash)->first();
+        }
 
         if (request()->has('full') || request()->has('dl')) {
             $stack = resolve('App\Stack\StackApi');
