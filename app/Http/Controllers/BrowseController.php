@@ -52,7 +52,7 @@ class BrowseController extends Controller
         if (!isset($file)) {
             $root = StackFolder::whereNull('parent_id')->firstOrFail();
             $root->refreshRecursiveUntilHashFound($hash);
-            $file = StackFile::where('path_hash', $hash)->first();
+            $file = StackFile::where('path_hash', $hash)->firstOrFail();
         }
 
         if (request()->has('dl')) {
