@@ -16,7 +16,7 @@ use App\Stack\Downloaders;
  * @property int $parent_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property-read array $breadcrumbs
+ * @property-read array $parents
  * @property-read string $file_full
  * @property-read string $file_thumbnail
  * @property-read string $mimetype
@@ -93,14 +93,6 @@ class StackFile extends StackItem
         'application/x-ms-wim',
         'application/x-7z-compressed',
     ];
-
-    /**
-     * Get the parent folder for this file.
-     */
-    public function parent()
-    {
-        return $this->belongsTo('App\StackFolder');
-    }
 
     /**
      * @return string

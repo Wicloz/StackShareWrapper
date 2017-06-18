@@ -18,11 +18,11 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
                 @if (isset($item))
-                    @foreach ($item->breadcrumbs as $name => $url)
+                    @foreach ($item->parents as $parent)
                         <li>
-                            <a href="{{ url($url) }}">
+                            <a href="{{ $parent->url_slug }}">
                                 <span>></span>
-                                {{ $name }}
+                                {{ $parent->name }}
                             </a>
                         </li>
                     @endforeach

@@ -16,7 +16,7 @@ use App\Stack\StackApi;
  * @property int $parent_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property-read array $breadcrumbs
+ * @property-read array $parents
  * @property-read string $file_thumbnail
  * @property-read string $name
  * @property-read string $path_clean
@@ -45,14 +45,6 @@ class StackFolder extends StackItem
      * @var array
      */
     protected $fillable = ['path', 'size', 'parent'];
-
-    /**
-     * Get the parent folder for this folder.
-     */
-    public function parent()
-    {
-        return $this->belongsTo('App\StackFolder');
-    }
 
     /**
      * Get all folders in this folder.

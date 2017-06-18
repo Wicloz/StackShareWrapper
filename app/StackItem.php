@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * App\StackItem
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $parent_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property-read array $breadcrumbs
+ * @property-read array $parents
  * @property-read string $name
  * @property-read string $path_clean
  * @property-read string $extension
@@ -23,9 +24,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read string $human_size
  * @property-read string $url_hash
  * @property-read string $url_slug
+ * @property-read \App\StackFolder $parent
  */
 class StackItem extends Model
 {
+    /**
+     * Get the parent folder for this folder.
+     */
+    public function parent()
+    {
+        return $this->belongsTo('App\StackFolder');
+    }
+
     /**
      * @return string
      */
@@ -46,20 +56,17 @@ class StackItem extends Model
     /**
      * @return array
      */
-    public function getBreadcrumbsAttribute()
+    public function getParentsAttribute()
     {
-        $breadcrumbs = [];
+        $parents = new Collection();
 
-        if (!empty($this->path_clean)) {
-            $names = array_slice(explode('/', $this->path), 1);
-            $slugs = array_slice(explode('/', $this->path_slug), 1);
-
-            foreach ($names as $index => $name) {
-                $breadcrumbs[$name] = ($index > 0 ? $breadcrumbs[$names[$index - 1]] : '') . '/' . $slugs[$index];
-            }
+        $parent = $this;
+        while ($parent->parent !== null) {
+            $parents->prepend($parent);
+            $parent = $parent->parent;
         }
 
-        return $breadcrumbs;
+        return $parents->all();
     }
 
     /**
