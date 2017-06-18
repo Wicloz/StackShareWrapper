@@ -21,10 +21,10 @@
                             <img class="thumbnail preview-thumbnail" src="{{ $subFolder->file_thumbnail }}" alt="">
                         </td>
                         <td>
-                            <a class="item-name" href="{{ url($subFolder->path_slug) }}">{{ $subFolder->name }}</a>
+                            <a class="item-name item-center-vertical" href="{{ url($subFolder->path_slug) }}">{{ $subFolder->name }}</a>
                         </td>
                         <td>
-                            {{ humanFileSize($subFolder->size) }}
+                            <span class="item-center-vertical">{{ humanFileSize($subFolder->size) }}</span>
                         </td>
 
                         <td>
