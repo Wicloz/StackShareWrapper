@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-05-13.
+    * Generated on 2017-06-18.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -132,6 +132,7 @@ namespace PHPSTORM_META {
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
             'slugify' instanceof \Cocur\Slugify\Slugify,
+            'App\Stack\StackApi' instanceof \App\Stack\StackApi,
         ],
         \Illuminate\Contracts\Container\Container::make('') => [
             '' == '@',
@@ -256,6 +257,7 @@ namespace PHPSTORM_META {
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
             'slugify' instanceof \Cocur\Slugify\Slugify,
+            'App\Stack\StackApi' instanceof \App\Stack\StackApi,
         ],
         \App::make('') => [
             '' == '@',
@@ -380,6 +382,7 @@ namespace PHPSTORM_META {
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
             'slugify' instanceof \Cocur\Slugify\Slugify,
+            'App\Stack\StackApi' instanceof \App\Stack\StackApi,
         ],
         \app('') => [
             '' == '@',
@@ -504,6 +507,7 @@ namespace PHPSTORM_META {
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
             'slugify' instanceof \Cocur\Slugify\Slugify,
+            'App\Stack\StackApi' instanceof \App\Stack\StackApi,
         ],
     ];
 }
