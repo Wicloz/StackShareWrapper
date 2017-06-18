@@ -81,3 +81,12 @@
         </tbody>
     </table>
 @endsection
+
+@section('head')
+    <meta property="og:site_name" content="{{ config('app.name') }}">
+    <meta property="og:title" content="{{ $item->path }}">
+    <meta property="og:image" content="{{ $item->file_thumbnail }}">
+    {{--<meta property="og:type" content="object">--}}
+    {{--<meta property="og:url" content="">--}}
+    {{--<meta property="og:description" content="">--}}
+@endsection
