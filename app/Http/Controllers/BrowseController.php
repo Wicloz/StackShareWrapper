@@ -56,9 +56,7 @@ class BrowseController extends Controller
         }
 
         if (request()->has('full') || request()->has('dl')) {
-            $stack = resolve('App\Stack\StackApi');
-            $stack->presentFile($file, request()->has('dl'));
-            return null;
+            return response()->stackFile($file, request()->has('dl'));
         }
 
         else {
