@@ -36,6 +36,7 @@ use App\Stack\Downloaders;
  * @property-read string $extension
  * @property-read string $human_size
  * @property-read string $url_hash
+ * @property-read string $mimeclean
  */
 class StackFile extends StackItem
 {
@@ -147,10 +148,17 @@ class StackFile extends StackItem
     /**
      * @return string
      */
+    public function getMimecleanAttribute()
+    {
+        return explode(';', $this->mimetype)[0];
+    }
+
+    /**
+     * @return string
+     */
     public function getTypeAttribute()
     {
-        $mimeClean = explode(';', $this->mimetype)[0];
-        $mimeBits = explode('/', $mimeClean);
+        $mimeBits = explode('/', $this->mimeclean);
 
         // Markdown by extension
         if ($this->extension === 'md') { // TODO
@@ -158,31 +166,31 @@ class StackFile extends StackItem
         }
 
         // Code by extension and mimetype
-        elseif (in_array($this->extension, $this->codeExtensions) || in_array($mimeClean, $this->codeMimetypes)) {
+        elseif (in_array($this->extension, $this->codeExtensions) || in_array($this->mimeclean, $this->codeMimetypes)) {
             return 'code';
         }
 
         // Minor types by mimetype
-        elseif ($mimeClean === 'application/pdf') {
+        elseif ($this->mimeclean === 'application/pdf') {
             return 'pdf';
         }
-        elseif ($mimeClean === 'application/epub+zip') {
+        elseif ($this->mimeclean === 'application/epub+zip') {
             return 'epub';
         }
-        elseif ($mimeClean === 'application/json') {
+        elseif ($this->mimeclean === 'application/json') {
             return 'json';
         }
-        elseif ($mimeClean === 'text/xml') {
+        elseif ($this->mimeclean === 'text/xml') {
             return 'xml';
         }
 
         // Compressed files by mimetype
-        elseif (in_array($mimeClean, $this->packageMimetypes)) {
+        elseif (in_array($this->mimeclean, $this->packageMimetypes)) {
             return 'package';
         }
 
         // Windows executables by mimetype
-        elseif ($mimeClean === 'application/x-msdownload' || $mimeClean === 'application/x-ms-dos-executable') {
+        elseif ($this->mimeclean === 'application/x-msdownload' || $this->mimeclean === 'application/x-ms-dos-executable') {
             return 'executable';
         }
 
