@@ -59,6 +59,7 @@ class StackApi
         }
 
         readfile(cleanUrl($file->file_full));
+        die(); die(); die();
 
         return new Response("", 200, collect(headers_list())->mapWithKeys(function ($item) {
             return [explode(': ', $item)[0] => explode(': ', $item)[1]];
