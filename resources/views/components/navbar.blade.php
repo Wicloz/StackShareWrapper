@@ -20,7 +20,7 @@
                 @if (isset($item))
                     @foreach ($item->parents as $parent)
                         <li>
-                            <a href="{{ $parent->url_slug }}">
+                            <a href="{{ $parent->url_hash }}">
                                 <span>></span>
                                 {{ $parent->name }}
                             </a>
