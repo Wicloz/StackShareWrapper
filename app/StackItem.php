@@ -18,7 +18,6 @@ use Illuminate\Support\Collection;
  * @property-read array $parents
  * @property-read string $name
  * @property-read string $path_clean
- * @property-read string $extension
  * @mixin \Eloquent
  * @property-read string $human_size
  * @property-read string $url_hash
@@ -70,15 +69,6 @@ class StackItem extends Model
     /**
      * @return string
      */
-    public function getExtensionAttribute()
-    {
-        $nameBits = explode('.', $this->name);
-        return count($nameBits) > 1 ? $nameBits[count($nameBits) - 1] : '';
-    }
-
-    /**
-     * @return string
-     */
     public function getUrlHashAttribute()
     {
         return url((Static::class == StackFolder::class ? '/folder/' : '/file/') . $this->path_hash);
@@ -100,11 +90,7 @@ class StackItem extends Model
     {
         if (empty($this->attributes['path'])) {
             $this->attributes['path'] = $value;
-
-            $slugPath = implode('/', collect(explode('/', $value))->map(function ($item) {
-                return slugify($item);
-            })->all());
-            $this->attributes['path_hash'] = hashify($slugPath) . (Static::class == StackFile::class ? '.' . mb_strtolower($this->extension) : '');
+            $this->attributes['path_hash'] = hashify(mb_strtolower($value)) . (Static::class == StackFile::class ? '.' . mb_strtolower($this->extension) : '');
         }
 
         else {

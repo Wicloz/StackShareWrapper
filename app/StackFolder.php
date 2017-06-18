@@ -31,7 +31,6 @@ use App\Stack\StackApi;
  * @method static \Illuminate\Database\Query\Builder|\App\StackFolder whereSize($value)
  * @method static \Illuminate\Database\Query\Builder|\App\StackFolder whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property-read string $extension
  * @property-read string $human_size
  * @property-read string $url_hash
  */

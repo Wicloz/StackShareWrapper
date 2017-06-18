@@ -95,6 +95,15 @@ class StackFile extends StackItem
     /**
      * @return string
      */
+    public function getExtensionAttribute()
+    {
+        $nameBits = explode('.', $this->name);
+        return count($nameBits) > 1 ? $nameBits[count($nameBits) - 1] : '';
+    }
+
+    /**
+     * @return string
+     */
     public function getFileThumbnailAttribute()
     {
         switch ($this->type) {
