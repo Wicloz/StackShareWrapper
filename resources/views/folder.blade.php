@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', $item->path)
+@section('description', "Browse " . $item->name . " at " . config('app.name') . ".")
 
 @section('content-center')
     <div class="table-responsive">

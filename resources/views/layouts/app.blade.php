@@ -7,9 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Information -->
-    <title>{{ config('app.name') }} - @yield('title', 'DEFINE')</title>
-    <meta name="description" content="">
+    <title>{{ config('app.name') }} - @yield('title', '')</title>
+    <meta name="description" content="@yield('description', '')">
     <meta name="author" content="Wilco de Boer | Wicloz">
+    <!-- og Information -->
+    <meta property="og:site_name" content="{{ config('app.name') }}">
+    <meta property="og:title" content="{{ config('app.name') }} - @yield('title', '')">
+    <meta property="og:description" content="@yield('description', '')">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
