@@ -48,18 +48,21 @@ class BrowseController extends Controller
      */
     public function file($hash)
     {
-        $file = StackFile::where('path_hash', $hash)->first();
+        $cleanHash = explode('.', $hash)[0];
+        $file = StackFile::where('path_hash', $cleanHash)->first();
         if (!isset($file)) {
             $root = StackFolder::whereNull('parent_id')->firstOrFail();
-            $root->refreshRecursiveUntilHashFound($hash);
-            $file = StackFile::where('path_hash', $hash)->firstOrFail();
+            $root->refreshRecursiveUntilHashFound($cleanHash);
+            $file = StackFile::where('path_hash', $cleanHash)->firstOrFail();
         }
 
-        if (request()->has('dl')) {
-            return response()->stackDownload($file);
-        }
-        elseif (request()->has('full')) {
-            return response()->stackView($file);
+        if (str_contains($hash, '.')) {
+            if (request()->has('dl')) {
+                return response()->stackDownload($file);
+            }
+            else {
+                return response()->stackView($file);
+            }
         }
 
         else {

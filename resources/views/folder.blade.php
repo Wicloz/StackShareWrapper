@@ -50,10 +50,10 @@
                         </td>
 
                         <td>
-                            <a href="{{ "{$subFile->url_hash}?dl=1" }}" title="Download">
+                            <a href="{{ $subFile->url_download }}" title="Download">
                                 <img class="share-icon pull-right" src="{{ '/media/icons/download.svg' }}" alt="download">
                             </a>
-                            <a href="{{ "{$subFile->url_hash}?full=1" }}" title="Share">
+                            <a href="{{ $subFile->url_full }}" title="Share">
                                 <img class="share-icon pull-right" src="{{ '/media/icons/link.svg' }}" alt="link">
                             </a>
                         </td>

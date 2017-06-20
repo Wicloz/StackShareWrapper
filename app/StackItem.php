@@ -95,7 +95,7 @@ class StackItem extends Model
     {
         if (empty($this->attributes['path'])) {
             $this->attributes['path'] = $value;
-            $this->attributes['path_hash'] = hashify(mb_strtolower($value)) . (Static::class == StackFile::class ? '.' . mb_strtolower($this->extension) : '');
+            $this->attributes['path_hash'] = hashify(mb_strtolower($value));
         }
 
         else {

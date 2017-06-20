@@ -37,6 +37,8 @@ use App\Stack\Downloaders;
  * @property-read string $human_size
  * @property-read string $url_hash
  * @property-read string $mimeclean
+ * @property-read string $url_download
+ * @property-read string $url_full
  */
 class StackFile extends StackItem
 {
@@ -131,6 +133,22 @@ class StackFile extends StackItem
         $baseurl = config('stack.baseurl');
         $shareid = config('stack.shareid');
         return "{$baseurl}/public-share/{$shareid}/preview?path={$this->path}&mode=full";
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlFullAttribute()
+    {
+        return secure_url("/file/{$this->path_hash}.{$this->extension}");
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlDownloadAttribute()
+    {
+        return secure_url("/file/{$this->path_hash}.{$this->extension}?dl=1");
     }
 
     /**
