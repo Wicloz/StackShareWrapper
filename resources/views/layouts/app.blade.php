@@ -13,7 +13,7 @@
     <!-- Open Graph Information -->
     <meta property="og:title" content="{{ config('app.name') }} - @yield('title', '')">
     <meta property="og:type" content="@yield('type', 'website')">
-    <meta property="og:image" content="@yield('icon', url('/favicon.ico'))">
+    <meta property="og:image" content="@yield('icon', secure_url('/favicon.ico'))">
     <meta property="og:url" content="@yield('canonical', request()->fullUrl())">
     <meta property="og:description" content="@yield('description', '')">
     <meta property="og:site_name" content="{{ config('app.name') }}">

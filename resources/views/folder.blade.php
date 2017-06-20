@@ -31,8 +31,8 @@
                         </td>
 
                         <td>
-                            <img class="share-icon pull-right invisible" src="{{ url('/media/icons/download.svg') }}" alt="">
-                            <img class="share-icon pull-right invisible" src="{{ url('/media/icons/link.svg') }}" alt="">
+                            <img class="share-icon pull-right invisible" src="{{ '/media/icons/download.svg' }}" alt="">
+                            <img class="share-icon pull-right invisible" src="{{ '/media/icons/link.svg' }}" alt="">
                         </td>
                     </tr>
                 @endforeach
@@ -51,10 +51,10 @@
 
                         <td>
                             <a href="{{ "{$subFile->url_hash}?dl=1" }}" title="Download">
-                                <img class="share-icon pull-right" src="{{ url('/media/icons/download.svg') }}" alt="download">
+                                <img class="share-icon pull-right" src="{{ '/media/icons/download.svg' }}" alt="download">
                             </a>
                             <a href="{{ "{$subFile->url_hash}?full=1" }}" title="Share">
-                                <img class="share-icon pull-right" src="{{ url('/media/icons/link.svg') }}" alt="link">
+                                <img class="share-icon pull-right" src="{{ '/media/icons/link.svg' }}" alt="link">
                             </a>
                         </td>
                     </tr>

@@ -77,7 +77,7 @@ class StackController extends Controller
         return response()->json([
             'success' => true,
             'response' => trim($response),
-            'shareUrl' => url("/file/{$file->path_hash}?full=1"),
+            'shareUrl' => secure_url("/file/{$file->path_hash}?full=1"),
             'thumbnailUrl' => $file->file_thumbnail,
         ]);
     }

@@ -115,9 +115,9 @@ class StackFile extends StackItem
 
             default:
                 if (file_exists(public_path("/media/thumbnails/{$this->type}.svg"))) {
-                    return url("/media/thumbnails/{$this->type}.svg");
+                    return "/media/thumbnails/{$this->type}.svg";
                 } else {
-                    return url("/media/thumbnails/file.svg");
+                    return "/media/thumbnails/file.svg";
                 }
 
         }

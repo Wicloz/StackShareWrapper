@@ -64,7 +64,7 @@ class StackFolder extends StackItem
      */
     public function getFileThumbnailAttribute()
     {
-        return url('/media/thumbnails/folder.svg');
+        return '/media/thumbnails/folder.svg';
     }
 
     /**

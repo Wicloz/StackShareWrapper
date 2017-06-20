@@ -76,7 +76,7 @@ class StackItem extends Model
      */
     public function getUrlHashAttribute()
     {
-        return url((Static::class == StackFolder::class ? '/folder/' : '/file/') . $this->path_hash);
+        return secure_url((Static::class == StackFolder::class ? '/folder/' : '/file/') . $this->path_hash);
     }
 
     /**

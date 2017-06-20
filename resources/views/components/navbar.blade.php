@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="{{ secure_url('/') }}">
                 {{ config('app.name') }}
             </a>
         </div>
