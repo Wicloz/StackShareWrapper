@@ -38,6 +38,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        request()->headers->set('host', config('app.url'));
     }
 }
