@@ -19,7 +19,7 @@ class BrowseController extends Controller
     }
 
     /**
-     * Show the requested folder.
+     * Show the requested folder page.
      *
      * @param string $hash
      * @return \Illuminate\Http\Response
@@ -41,22 +41,21 @@ class BrowseController extends Controller
     }
 
     /**
-     * Show the requested file.
+     * Show the requested file page, or direct file.
      *
      * @param string $hash
      * @return \Illuminate\Http\Response
      */
-    public function file($hash)
+    public function file($hash, $name = null)
     {
-        $cleanHash = explode('.', $hash)[0];
-        $file = StackFile::where('path_hash', $cleanHash)->first();
+        $file = StackFile::where('path_hash', $hash)->first();
         if (!isset($file)) {
             $root = StackFolder::whereNull('parent_id')->firstOrFail();
-            $root->refreshRecursiveUntilHashFound($cleanHash);
-            $file = StackFile::where('path_hash', $cleanHash)->firstOrFail();
+            $root->refreshRecursiveUntilHashFound($hash);
+            $file = StackFile::where('path_hash', $hash)->firstOrFail();
         }
 
-        if (str_contains($hash, '.')) {
+        if ($name != null) {
             if (request()->has('dl')) {
                 return response()->stackDownload($file);
             }

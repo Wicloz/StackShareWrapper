@@ -140,7 +140,8 @@ class StackFile extends StackItem
      */
     public function getUrlFullAttribute()
     {
-        return secure_url("/file/{$this->path_hash}.{$this->extension}");
+        $slugName = slugify($this->name);
+        return secure_url("/file/{$this->path_hash}/{$slugName}");
     }
 
     /**
@@ -148,7 +149,8 @@ class StackFile extends StackItem
      */
     public function getUrlDownloadAttribute()
     {
-        return secure_url("/file/{$this->path_hash}.{$this->extension}?dl=1");
+        $slugName = slugify($this->name);
+        return secure_url("/file/{$this->path_hash}/{$slugName}?dl=1");
     }
 
     /**
