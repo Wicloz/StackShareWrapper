@@ -23,5 +23,5 @@ if (mix.config.inProduction) {
 }
 
 else {
-    mix.sourceMaps().browserSync(process.env.APP_URL);
+    mix.sourceMaps().browserSync(process.env.APP_DEV_URL);
 }
