@@ -34,11 +34,14 @@ class StackController extends Controller
         if (!starts_with($path, '/')) {
             $path = '/' . $path;
         }
-        $parentFolder = StackFolder::where('path', $path)->first();
-        if (!ends_with($path, '/')) {
-            $path = $path . '/';
+        while (ends_with($path, '/')) {
+            $path = str_replace_last('/', '', $path);
         }
-        $path .= request()->file->getClientOriginalName();
+        $parentFolder = StackFolder::where('path', $path)->first();
+        $path .= '/' . request()->file->getClientOriginalName();
+
+        // Refresh the cache for the parent folder
+        $parentFolder->refresh();
 
         // Check for StackFile existence
         $file = $parentFolder->subFiles()->where('path', $path)->first();
