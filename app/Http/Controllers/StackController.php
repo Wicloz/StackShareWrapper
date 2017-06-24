@@ -80,7 +80,7 @@ class StackController extends Controller
         return response()->json([
             'success' => true,
             'response' => trim($response),
-            'shareUrl' => secure_url("/file/{$file->path_hash}?full=1"),
+            'shareUrl' => $file->url_full,
             'thumbnailUrl' => $file->file_thumbnail,
         ]);
     }
