@@ -4,20 +4,22 @@
     width: 56px;
   }
 
+  .icons-column {
+    width: 140px;
+  }
+
   tr {
     height: 57px;
     .item-center-vertical {
       line-height: 40px;
     }
     .item-name {
-      overflow: hidden;
-      text-overflow: ellipsis;
       word-break: break-all;
     }
   }
 
   .share-icon {
-    margin: 4px 0px 4px 16px;
+    margin: 4px 0px 4px 12px;
   }
 
   .preview-thumbnail {

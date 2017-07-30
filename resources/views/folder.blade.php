@@ -13,7 +13,7 @@
                     <th class="preview-column"></th>
                     <th>Name</th>
                     <th>Size</th>
-                    <th></th>
+                    <th class="icons-column"></th>
                 </tr>
             </thead>
 
@@ -31,9 +31,9 @@
                         </td>
 
                         <td>
-                            <img class="share-icon pull-right invisible" src="{{ '/media/icons/download.svg' }}" alt="">
-                            <img class="share-icon pull-right invisible" src="{{ '/media/icons/link.svg' }}" alt="">
-                            <img class="share-icon pull-right invisible" src="{{ '/media/icons/copy.svg' }}" alt="">
+                            <img tabindex="0" class="clpbrd share-icon" src="{{ '/media/icons/copy.svg' }}" alt="copy" data-clipboard-text="{{ $subFolder->url_hash }}" data-title="Copy Preview Link">
+                            <img class="share-icon invisible" src="{{ '/media/icons/link.svg' }}" alt="">
+                            <img class="share-icon invisible" src="{{ '/media/icons/download.svg' }}" alt="">
                         </td>
                     </tr>
                 @endforeach
@@ -51,9 +51,9 @@
                         </td>
 
                         <td>
-                            <img tabindex="0" class="clpbrd share-icon pull-right" src="{{ '/media/icons/download.svg' }}" alt="download" data-clipboard-text="{{ $subFile->url_download }}" data-title="Copy Download Link">
-                            <img tabindex="0" class="clpbrd share-icon pull-right" src="{{ '/media/icons/link.svg' }}" alt="share" data-clipboard-text="{{ $subFile->url_full }}" data-title="Copy Media Link">
-                            <img tabindex="0" class="clpbrd share-icon pull-right" src="{{ '/media/icons/copy.svg' }}" alt="copy" data-clipboard-text="{{ $subFile->url_hash }}" data-title="Copy Preview Link">
+                            <img tabindex="0" class="clpbrd share-icon" src="{{ '/media/icons/copy.svg' }}" alt="copy" data-clipboard-text="{{ $subFile->url_hash }}" data-title="Copy Preview Link">
+                            <img tabindex="0" class="clpbrd share-icon" src="{{ '/media/icons/link.svg' }}" alt="share" data-clipboard-text="{{ $subFile->url_full }}" data-title="Copy Media Link">
+                            <img tabindex="0" class="clpbrd share-icon" src="{{ '/media/icons/download.svg' }}" alt="download" data-clipboard-text="{{ $subFile->url_download }}" data-title="Copy Download Link">
                         </td>
                     </tr>
                 @endforeach
