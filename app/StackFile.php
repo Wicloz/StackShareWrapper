@@ -234,8 +234,11 @@ class StackFile extends StackItem
         }
 
         // Default from mimetype
-        elseif ($this->mimeclean !== 'application/octet-stream') {
+        elseif (!empty($mimeBits[0]) && $mimeBits[0] !== 'application') {
             return $mimeBits[0];
+        }
+        elseif (!empty($mimeBits[1]) && $mimeBits[1] !== 'octet-stream') {
+            return $mimeBits[1];
         }
         // Default from extension
         elseif (!empty($this->extension)) {
