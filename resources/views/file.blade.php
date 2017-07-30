@@ -74,19 +74,13 @@
         <tbody>
             <tr>
                 <td>
-                    <a href="{{ $item->url_hash }}" title="Link">
-                        <img class="share-icon center-block" src="{{ '/media/icons/copy.svg' }}" alt="link">
-                    </a>
+                    <img tabindex="0" class="clpbrd share-icon center-block" src="{{ '/media/icons/copy.svg' }}" alt="copy" data-clipboard-text="{{ $item->url_hash }}" data-title="Copy Preview Link">
                 </td>
                 <td>
-                    <a href="{{ $item->url_full }}" title="Share">
-                        <img class="share-icon center-block" src="{{ '/media/icons/link.svg' }}" alt="link">
-                    </a>
+                    <img tabindex="0" class="clpbrd share-icon center-block" src="{{ '/media/icons/link.svg' }}" alt="share" data-clipboard-text="{{ $item->url_full }}" data-title="Copy Media Link">
                 </td>
                 <td>
-                    <a href="{{ $item->url_download }}" title="Download">
-                        <img class="share-icon center-block" src="{{ '/media/icons/download.svg' }}" alt="download">
-                    </a>
+                    <img tabindex="0" class="clpbrd share-icon center-block" src="{{ '/media/icons/download.svg' }}" alt="download" data-clipboard-text="{{ $item->url_download }}" data-title="Copy Download Link">
                 </td>
             </tr>
         </tbody>
