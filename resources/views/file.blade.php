@@ -29,7 +29,8 @@
         {{-- TODO --}}
 
     @elseif ($item->type === 'pdf')
-        {{-- TODO --}}
+        <iframe class="preview-pdf" src="{{ $item->file_full }}"></iframe>
+        <script src="{{ mix('/js/pdfiframe.js') }}"></script>
 
     @elseif ($item->type === 'epub')
         {{-- TODO --}}
