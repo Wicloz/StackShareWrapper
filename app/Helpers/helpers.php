@@ -38,14 +38,12 @@ function hashify($string)
  */
 function extensionToMimeType($extension)
 {
-    if (!empty($extension)) {
-        $mt = new MimeTypes();
-        return $mt->extensionToMimeType(mb_strtolower($extension));
+    $mt = new MimeTypes();
+    $mimetype = $mt->extensionToMimeType(mb_strtolower($extension));
+    if (!empty($mimetype)) {
+        return $mimetype;
     }
-
-    else {
-        return 'application/octet-stream';
-    }
+    return 'application/octet-stream';
 }
 
 /**

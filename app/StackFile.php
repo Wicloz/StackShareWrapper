@@ -50,6 +50,15 @@ class StackFile extends StackItem
     protected $fillable = ['path', 'size', 'mimetype_remote', 'parent'];
 
     /**
+     * Extensions for files that can be rendered as markdown.
+     *
+     * @var array
+     */
+    protected $markdownExtensions = [
+        'md',
+    ];
+
+    /**
      * Extensions for files that can be previewed as code.
      *
      * @var array
@@ -93,6 +102,16 @@ class StackFile extends StackItem
         'application/x-tar',
         'application/x-ms-wim',
         'application/x-7z-compressed',
+    ];
+
+    /**
+     * Mime types for executable files.
+     *
+     * @var array
+     */
+    protected $executableMimetypes = [
+        'application/x-msdownload',
+        'application/x-ms-dos-executable',
     ];
 
     /**
@@ -158,7 +177,7 @@ class StackFile extends StackItem
      */
     public function getMimetypeAttribute()
     {
-        if ($this->mimetype_remote !== 'application/octet-stream') {
+        if (!empty($this->mimetype_remote) && $this->mimetype_remote !== 'application/octet-stream') {
             return $this->mimetype_remote;
         } else {
             return extensionToMimeType($this->extension);
@@ -181,11 +200,11 @@ class StackFile extends StackItem
         $mimeBits = explode('/', $this->mimeclean);
 
         // Markdown by extension
-        if ($this->extension === 'md') { // TODO
+        if (in_array($this->extension, $this->markdownExtensions)) {
             return 'markdown';
         }
 
-        // Code by extension and mimetype
+        // Code by extension or mimetype
         elseif (in_array($this->extension, $this->codeExtensions) || in_array($this->mimeclean, $this->codeMimetypes)) {
             return 'code';
         }
@@ -209,13 +228,13 @@ class StackFile extends StackItem
             return 'package';
         }
 
-        // Windows executables by mimetype
-        elseif ($this->mimeclean === 'application/x-msdownload' || $this->mimeclean === 'application/x-ms-dos-executable') {
+        // Executables by mimetype
+        elseif (in_array($this->mimeclean, $this->executableMimetypes)) {
             return 'executable';
         }
 
         // Default from mimetype
-        elseif (!empty($mimeBits[0]) && $mimeBits[0] !== 'application') {
+        elseif ($this->mimeclean !== 'application/octet-stream') {
             return $mimeBits[0];
         }
         // Default from extension
