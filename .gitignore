@@ -1,9 +1,11 @@
 /node_modules
+/bower_components
 /vendor
 npm-debug.log
+yarn-error.log
 
 /.idea
-/.vagrant
+.env
 
 /public/hot
 /public/storage
@@ -16,4 +18,4 @@ npm-debug.log
 /storage/*.key
 Homestead.json
 Homestead.yaml
-.env
+/.vagrant

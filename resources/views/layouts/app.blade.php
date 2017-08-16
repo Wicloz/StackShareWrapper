@@ -18,12 +18,6 @@
     <meta property="og:description" content="@yield('description', '')">
     <meta property="og:site_name" content="{{ config('app.name') }}">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script>
-        window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
-    </script>
-
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
@@ -88,6 +82,8 @@
 
     <!-- Scripts -->
     <script src="{{ mix('/js/app.js') }}"></script>
+
+    <!-- Google Analytics -->
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
