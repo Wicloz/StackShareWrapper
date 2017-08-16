@@ -73,9 +73,9 @@ class StackFolder extends StackItem
     public function refresh()
     {
         $stack = resolve('App\Stack\StackApi');
-        $json = $stack->getFolderInfo($this->path);
+        $nodes = $stack->getFolderInfo($this->path);
 
-        foreach ($json->nodes as $node) {
+        foreach ($nodes as $node) {
             if ($node->mimetype === 'httpd/unix-directory') {
                 $this->subFolders()->updateOrCreate([
                     'path' => $node->path,
@@ -94,8 +94,8 @@ class StackFolder extends StackItem
             }
         }
 
-        $this->subFolders()->whereNotIn('path', collect($json->nodes)->pluck('path'))->delete();
-        $this->subFiles()->whereNotIn('path', collect($json->nodes)->pluck('path'))->delete();
+        $this->subFolders()->whereNotIn('path', collect($nodes)->pluck('path'))->delete();
+        $this->subFiles()->whereNotIn('path', collect($nodes)->pluck('path'))->delete();
     }
 
     /**

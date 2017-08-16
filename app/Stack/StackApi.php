@@ -40,7 +40,16 @@ class StackApi
     public function getFolderInfo($path)
     {
         $amount = json_decode(Downloaders::downloadPage("{$this->baseurl}/public-share/{$this->shareid}/list?public=true&token={$this->shareid}&type=folder&offset=0&limit=0&dir={$path}"))->amount;
-        return json_decode(Downloaders::downloadPage("{$this->baseurl}/public-share/{$this->shareid}/list?public=true&token={$this->shareid}&type=folder&offset=0&limit={$amount}&dir={$path}"));
+        $nodes = [];
+
+        while ($amount > 0) {
+            $nodesSize = count($nodes);
+            $json = json_decode(Downloaders::downloadPage("{$this->baseurl}/public-share/{$this->shareid}/list?public=true&token={$this->shareid}&type=folder&offset={$nodesSize}&limit={$amount}&dir={$path}"));
+            $nodes = array_merge($nodes, $json->nodes);
+            $amount -= count($json->nodes);
+        }
+
+        return $nodes;
     }
 
     /**
