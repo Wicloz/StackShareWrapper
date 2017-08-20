@@ -99,7 +99,7 @@ class StackFolder extends StackItem
     }
 
     /**
-     * Refresh all the data for this folder and all sub folders from stack, untill a file or folder with the given hash is found.
+     * Refresh all the data for this folder and all sub folders from stack, until a file or folder with the given hash is found.
      * @param $hash
      */
     public function refreshRecursiveUntilHashFound($hash)

@@ -55,6 +55,10 @@ class BrowseController extends Controller
             $file = StackFile::where('path_hash', $hash)->firstOrFail();
         }
 
+        else {
+            $file->parent()->refresh();
+        }
+
         if ($name != null) {
             if (request()->has('dl')) {
                 return response()->stackDownload($file);
