@@ -56,7 +56,7 @@ class BrowseController extends Controller
         }
 
         else {
-            $file->parent()->refresh();
+            $file->parent->refresh();
         }
 
         if ($name != null) {
