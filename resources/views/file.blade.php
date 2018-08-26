@@ -75,13 +75,13 @@
         <tbody>
             <tr>
                 <td>
-                    <img tabindex="0" class="clpbrd share-icon center-block" src="{{ '/media/icons/copy.svg' }}" alt="copy" data-clipboard-text="{{ $item->url_hash }}" data-title="Copy Preview Link">
+                    <img tabindex="0" class="clpbrd ssw-share-icon center-block" src="{{ '/media/icons/copy.svg' }}" alt="copy" data-clipboard-text="{{ $item->url_hash }}" data-title="Copy Preview Link">
                 </td>
                 <td>
-                    <img tabindex="0" class="clpbrd share-icon center-block" src="{{ '/media/icons/link.svg' }}" alt="share" data-clipboard-text="{{ $item->url_full }}" data-title="Copy Media Link">
+                    <img tabindex="0" class="clpbrd ssw-share-icon center-block" src="{{ '/media/icons/link.svg' }}" alt="share" data-clipboard-text="{{ $item->url_full }}" data-title="Copy Media Link">
                 </td>
                 <td>
-                    <img tabindex="0" class="clpbrd share-icon center-block" src="{{ '/media/icons/download.svg' }}" alt="download" data-clipboard-text="{{ $item->url_download }}" data-title="Copy Download Link">
+                    <img tabindex="0" class="clpbrd ssw-share-icon center-block" src="{{ '/media/icons/download.svg' }}" alt="download" data-clipboard-text="{{ $item->url_download }}" data-title="Copy Download Link">
                 </td>
             </tr>
         </tbody>
