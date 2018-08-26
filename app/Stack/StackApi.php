@@ -36,6 +36,7 @@ class StackApi
      *
      * @param $path
      * @return string
+     * @throws \Exception
      */
     public function getFolderInfo($path)
     {
