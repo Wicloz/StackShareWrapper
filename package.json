@@ -16,6 +16,6 @@
     "dotenv": "^4.0.0",
     "jquery": "^3.1.1",
     "laravel-mix": "0.*",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.21"
   }
 }
